@@ -19,6 +19,7 @@ jobs:
               run: |
                 mkdir workspace
             - name: build base image
+              run: docker build -f device/builder-all-in-one.Dockerfile -t base-repo-image --target base-repo-image .
               run: docker build -f device/builder-all-in-one.Dockerfile -t rv1109-ai-uvc-run --target rv1109-ai-uvc-run .
             - name: updating and building inside docker
               run: docker run -v ${PWD}:/workspace -v ${PWD}/dist/build/rv1109-ai-uvc:/dist rv1109-ai-uvc-run
