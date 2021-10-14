@@ -1,0 +1,17 @@
+name: remote runner workflow
+
+on:
+    push:
+        branches: [ gunja/builder ]
+jobs:
+    build:
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v2
+            - name: run oneliner
+              run: echo Hello world
+            - name: multiliner
+              run: |
+                echo add another action
+                ls -l
+                pwd
