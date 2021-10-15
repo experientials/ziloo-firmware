@@ -8,6 +8,10 @@ jobs:
         runs-on: self-hosted
         steps:
             - uses: actions/checkout@v2
+            - uses: actions/download-artifact@v2
+              with:
+                name: rv1109-ai-uvc
+                path: dist/build/rv1109-ai-uvc              
             - name: run oneliner
               run: echo Hello world
             - name: multiliner
@@ -27,5 +31,4 @@ jobs:
             - uses: actions/download-artifact@v2
               with:
                 name: rv1109-ai-uvc
-                path: ./dist/build/rv1109-ai-uvc
-              
+                path: dist/build/rv1109-ai-uvc              
