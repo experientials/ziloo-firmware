@@ -27,5 +27,5 @@ jobs:
             - uses: actions/download-artifact@v2
               with:
                 name: rv1109-ai-uvc
-                path: /dist
+                path: ./dist/build/rv1109-ai-uvc
               
