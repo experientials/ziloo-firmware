@@ -23,7 +23,7 @@ jobs:
             - name: building rv1109-ai-uvc-run image
               run: docker build -f device/builder-all-in-one.Dockerfile -t rv1109-ai-uvc-run --target rv1109-ai-uvc-run .
             - name: updating and building inside docker
-              run: docker run  -v ${PWD}/dist/build/:/dist rv1109-ai-uvc-run
+              run: docker run -rm -v ${PWD}/dist/build/:/dist rv1109-ai-uvc-run
             - uses: actions/upload-artifact@v2
               with:
                 name: rv1109-ai-uvc
