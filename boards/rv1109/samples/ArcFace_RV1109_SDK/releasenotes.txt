@@ -1,0 +1,64 @@
+﻿////////////////////////////////////////////////////////////////////////////////
+//                   		ArcSoft Face Library 		      	              //        
+////////////////////////////////////////// /////////////////////////////////////
+
+Introduction:
+ArcSoft Face Library provides the universal interfaces to detect different face feature.
+
+Publish date:
+11/02/2020
+
+Expire date：
+NULL
+
+Version:
+1.0.22521010209.4
+
+Supported platform:
+arm_linux_1109
+
+Compile Options:
+default
+
+Dependency:
+none
+
+Known issues:
+None.
+
+File List:
+|---assistant
+|   |---ArcSoftActivationAssistant   					离线激活助手
+|   |---ReleaseNote.txt							   		使用说明
+|---doc
+|   |---ARCSOFT_ARC_FACE_DEVELOPER'S_GUIDE.pdf   		开发说明文档
+|---inc
+|   |---amcomdef.h                  					平台文件
+|   |---asvloffscreen.h                                	平台文件
+|   |---arcsoft_face_sdk.h                             	接口文件
+|   |---merror.h                                       	错误码文件
+|---lib
+|   |---linux_x64
+|   |   |---libarcsoft_face.so             				算法库
+|   |   |---libarcsoft_face_engine.so            		引擎库 
+|---samplecode
+|   |---ASFTestDemo                                 	示例Demo
+|   |---ReadMe.txt                                     	Demo使用说明
+|---releasenotes.txt                                    说明文件
+
+
+Change Logs:
+2020/09/15
+1.linux arm 口罩版本，目前仅支持rv1109系列芯片；
+
+2020/10/21
+1.更新算法库；
+
+2020/10/29
+1.更新NPU算法库；
+
+2020/11/02
+1.更新图像质量检测算法库，优化性能；
+
+
+

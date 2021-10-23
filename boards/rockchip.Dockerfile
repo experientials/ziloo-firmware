@@ -104,3 +104,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	echo Packages installed.
 
 COPY rkbin rkbin
+
+ENV RK_CFG_TOOLCHAIN = "arm-br-linux-gnueabihf"
+

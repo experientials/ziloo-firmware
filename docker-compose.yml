@@ -44,6 +44,7 @@ services:
     platform: "linux/amd64"
     volumes:
     - .:/workspace
+    - ../AI_UVC:/AI_UVC
     - ./boards:/boards
   rockchip-arm64:
     container_name: rockchip-builder-arm64

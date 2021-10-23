@@ -11,6 +11,7 @@ function dirclean()
 		librkdb-dirclean \
 		mediaserver-dirclean \
 		camera_engine_rkaiq-dirclean \
+		camera_engine_rkisp-dirclean \
 		netserver-dirclean \
 		storage_manager-dirclean \
 		rkmedia-dirclean \
@@ -36,6 +37,7 @@ function sync_mod()
 		app/ipc-daemon \
 		app/storage_manager \
 		external/camera_engine_rkaiq \
+		external/camera_engine_rkisp \
 		external/rkmedia \
 		external/common_algorithm \
 		external/rockface \
@@ -55,6 +57,7 @@ function rebuild()
 		librkdb-rebuild \
 		CallFunIpc-rebuild \
 		camera_engine_rkaiq-rebuild \
+		camera_engine_rkisp-rebuild \
 		isp2-ipc-rebuild \
 		ipcweb-backend-rebuild \
 		netserver-rebuild \
