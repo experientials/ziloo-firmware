@@ -3,6 +3,10 @@ name: remote runner workflow
 on:
     push:
         branches: [ gunja/builder ]
+        paths:
+            - 'device/rockchip/**/*'
+            - 'device/*'
+            - 'manifests/*'
 jobs:
     build:
         runs-on: self-hosted
