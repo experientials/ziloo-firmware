@@ -1,0 +1,48 @@
+#!/bin/sh
+sudo apt update && sudo apt upgrade -y
+sudo apt install gparted less nano gdb-multiarch qemu-user-static wget curl picocom kpartx realvnc-vnc-viewer
+sudo apt install cmake ninja-build clang code
+
+# TODO install GitHub actions slave, cross compilation, connecting to boards
+mkdir actions-runner && cd actions-runner
+curl -o actions-runner-linux-arm-2.279.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.279.0/actions-runner-linux-arm-2.279.0.tar.gz
+echo "0c756ae57ccf19062e1a16d30f72e3e769dcfb93ad83ed27f746f742def4f938  actions-runner-linux-arm-2.279.0.tar.gz" | shasum -a 256 -c
+tar xzf ./actions-runner-linux-arm-2.279.0.tar.gz
+
+
+# Setup SSH key
+ssh-keygen -t ed25519 -C "thepia@pm.me"
+git config --global user.email "thepia@pm.me"
+git config --global user.name "Talki Boss"
+
+# Disable swap
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+sudo apt purge dphys-swapfile
+
+# File Server
+sudo apt install samba
+sudo mkdir /media/share
+sudo chmod 777 /media/share
+sudo cp setup/rpi/etc/samba/smb.conf /etc/samba/smb.conf
+sudo service smbd restart
+
+
+# Maix-II CH340/441 UART
+# wget https://github.com/aperepel/raspberrypi-ch340-driver/releases/download/4.4.11-v7/ch34x.ko
+# sudo insmod ch34x.ko
+# picocom /dev/ttyUSB0
+
+
+# Docker support
+curl -sSL https://get.docker.com | sh
+sudo groupadd docker
+
+# and setup your Pi to have access to the Docker daemon
+sudo usermod -aG docker pi
+sudo reboot
+
+# TODO 
+# 1. manually set up the second script part for GitHub Actions Runner
+# 2. sudo nano /etc/docker/daemon.json
+
