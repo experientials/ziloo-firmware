@@ -1,0 +1,24 @@
+name: i.MX8 Firmware Build Runner
+
+on:
+    push:
+        branches: [ hw/imx8 ]
+        paths:
+            - 'device/imx8/**/*'
+            - 'device/*'
+            - 'manifests/*'
+jobs:
+    build:
+        runs-on: self-hosted
+        steps:
+            - name: create required directories
+              run: |
+                mkdir workspace
+            # - name: building base image
+            #   run: docker build -f device/builder-nxp.Dockerfile -t base-repo-image --target base-repo-image .
+            # - name: updating and building inside docker
+            #   run: docker run --rm -v ${PWD}/dist/build/:/dist imx8-run
+            # - uses: actions/upload-artifact@v2
+            #   with:
+            #     name: rv1109-ai-uvc
+            #     path: dist/build/rv1109-ai-uvc

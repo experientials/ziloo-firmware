@@ -13,7 +13,13 @@ Key building blocks are:
 - [F2FS](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html) storage (requires Linux Kernel 5.7)
 
 
-## SD Card Format
+For more information see,
+
+- [Setting up Development environment](./docs/DEVELOP.md)
+- [Continuous Integration](./docs/CONTINUOUS_INTEGRATION.md)
+- [SD Card Format](./docs/DEVELOP.md#SD_Card_Format)
+- [Building with Docker](./docs/DEVELOP.md#Docker)
+- [i.MX8 Yocto Docs](./docs/imx8/README.md)
 
 For development and debugging use an SD Card or USB stick. It must be partitioned,
 
@@ -39,7 +45,6 @@ It is best to base it on the `hw/-template-` branch.
 ## Building
 
 The firmware is automatically built using [GitHub Actions](https://github.com/features/actions).
-For details on the active pipelines see [Continuous Integration](.github/workflows/CONTINUOUS_INTEGRATION.md)
 In addition to firmware an [image-builder docker image](https://hub.docker.com/repository/docker/ziloo/image-builder) is also created by CI.
 There is an example hello build to demonstrate using docker.
 
