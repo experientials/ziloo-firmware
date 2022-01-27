@@ -6,7 +6,7 @@ FROM ubuntu:20.04 as base-builder
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    binutils bash gzip bzip2 tar lzop cpio python python-dev zip unzip rsync file bc \
+    binutils bash gzip bzip2 tar lzop cpio python python-dev zip unzip rsync file bc chrpath \
     u-boot-tools device-tree-compiler time tcl \
 	autoconf libtool automake \
     time lz4 device-tree-compiler fakeroot gnupg \
@@ -30,8 +30,13 @@ RUN apt-get update && \
     squashfs-tools \
     u-boot-tools \
     m4 bison flex fakeroot libparse-yapp-perl \
+    diffstat gcc-multilib gawk git-core locales zstd liblz4-tool \
+    texinfo xterm file python iputils-ping iproute2 \
+    python3-pexpect python3-git python3-jinja2 python3-subunit \
+    gawk socat xz-utils libegl1-mesa libsdl1.2-dev pylint3 mesa-common-dev debianutils \
     build-essential gcc g++ make cmake intltool pkg-config patch patchutils && \
     rm -rf /var/lib/apt/lists/*
+
 
 RUN gem update --system && \
     gem install --no-document serverspec

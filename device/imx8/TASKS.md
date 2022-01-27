@@ -29,6 +29,9 @@ Firmware source and build should be delivered as a Pull request against `hw/imx8
 * Test and Document how to install GitHub actions runner on the iMX module.
 * When receiving the dev board test that the firmware can be installed and boots correctly
 * Remove or replace modules `buildroot` and `u-boot` in the Git repo if appropriate.
+* Verify that image can boot on [Compulab UCM-iMX8M-Plus](https://mediawiki.compulab.com/w/index.php?title=UCM-iMX8M-Plus_NXP_iMX8M-Plus_Yocto_Linux)
+* Verify that image can boot on [I-Pi SMARC IMX8M Plus](https://www.ipi.wiki/pages/imx8mp-docs)
+* Fastboot(from Android) must be supported by U-Boot to allow pushing a new firmware image over USB and reboot
 
 
 ## Create Device Drivers for support $500
