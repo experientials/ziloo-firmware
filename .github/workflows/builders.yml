@@ -2,9 +2,12 @@ name: Publish Docker image
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - feature/ziloo-builder
   release:
-    types: [published]
+    types: 
+      - published
 
 jobs:
   push_to_registry:
@@ -13,9 +16,17 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@1
+
       - name: Log in to Docker Hub
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        uses: docker/login-action@1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        # run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -23,11 +34,15 @@ jobs:
         with:
           images: ziloo/image-builder
       
+              #     - name: building base image
+              # run: docker build -f device/builder-rockchip.Dockerfile -t base-repo-image --target base-repo-image .
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: builder.Dockerfile
+          file: ./firmware-builder/builder.Dockerfile
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

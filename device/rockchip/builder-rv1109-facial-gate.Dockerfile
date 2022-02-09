@@ -5,7 +5,7 @@ WORKDIR /workspace
 RUN repo sync -m rv1126_rv1109_linux_20210904_facial_gate.xml -c
 RUN ./build.sh cam-crv1109s2u-facial_gate.mk
 RUN FORCE_UNSAFE_CONFIGURE=1 ./build.sh
-COPY copy_dist.sh /copy_dist.sh
+COPY rockchip/copy_dist.sh /copy_dist.sh
 # TODO copy artifacts out of container
 
 # rockdev/MiniLoaderAll.bin

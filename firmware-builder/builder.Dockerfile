@@ -1,7 +1,8 @@
 #
 # The builder is based on Ubuntu to get the biggest range of tools
-# > docker build -f builder.Dockerfile --target image-builder .
-#
+# > docker buildx build -f builder.Dockerfile --target firmware-builder --platform linux/amd64 .
+# or 
+# > docker build -f builder.Dockerfile --target firmware-builder .
 FROM ubuntu:20.04 as base-builder
 
 RUN apt-get update && \
@@ -11,7 +12,7 @@ RUN apt-get update && \
 	autoconf libtool automake \
     time lz4 device-tree-compiler fakeroot gnupg \
     mtools parted libyaml-dev libxml2-utils libudev-dev libusb-1.0-0-dev \
-    curl wget sed asciidoc git  rsync openssh-client \
+    curl wget sed asciidoc git rsync openssh-client \
     perl ruby \
 	python3 \
 	python3-dev \
@@ -36,12 +37,7 @@ RUN apt-get update && \
 RUN gem update --system && \
     gem install --no-document serverspec
 
-COPY device /device/
-COPY device/rockchip /device/rockchip/
-RUN /device/install-genimage.sh
-
-
-FROM base-builder as ziloo-builder
+FROM base-builder as firmware-builder
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     mercurial subversion cvs \
@@ -57,52 +53,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/* && \
 	echo Packages installed.
 
+RUN apt upgrade -y && \
+
 # Installed via apt
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/bin/repo
 RUN chmod a+rx /usr/bin/repo
 RUN git config --global user.email hello@thepia.com && git config --global user.name "Henrik Vendelbo" && git config --global color.ui false
 
 
-FROM ziloo-builder as base-repo-image
-
-RUN mkdir -p /workspace/rockdev
-WORKDIR /workspace
-RUN repo init -u https://github.com/experientials/ziloo-firmware -m manifests/rv1126_rv1109_linux_20210904.xml
-COPY manifests /workspace/.repo/manifests
-COPY device/copy_dist.sh /copy_dist.sh
-RUN repo sync -m rv1126_rv1109_linux_20210904.xml -c
-
-FROM base-repo-image as rv1109-ai-uvc-run
-WORKDIR /workspace
-COPY device/rockchip/build_rv1109-ai-uvc.sh /build_rv1109-ai-uvc.sh
-ENTRYPOINT /build_rv1109-ai-uvc.sh
-
-FROM base-repo-image as rv1109-ai-uvc
-WORKDIR /workspace
-RUN .repo/repo/repo sync -m rv1126_rv1109_linux_ai_camera_20210904.xml -c
-RUN ./build.sh cam-crv1109s2u-uvcc.mk
-RUN FORCE_UNSAFE_CONFIGURE=1 ./build.sh
-ENTRYPOINT /copy_dist.sh
-
-FROM base-repo-image as rv1126-ai-uvc
-WORKDIR /workspace
-RUN .repo/repo/repo sync -m rv1126_rv1109_linux_ai_camera_20210904.xml -c
-RUN ./build.sh cam-crv1126s2u-uvcc.mk
-RUN FORCE_UNSAFE_CONFIGURE=1 ./build.sh
-ENTRYPOINT /copy_dist.sh
-
-
-FROM base-repo-image as rv1109-face-gate
-WORKDIR /workspace
-RUN .repo/repo/repo sync -m rv1126_rv1109_linux_20210904.xml -c
-RUN ./build.sh cam-crv1109s2u-facial_gate.mk
-RUN FORCE_UNSAFE_CONFIGURE=1 ./build.sh
-ENTRYPOINT /copy_dist.sh
-
-FROM base-repo-image as rv1126-face-gate
-WORKDIR /workspace
-RUN .repo/repo/repo sync -m rv1126_rv1109_linux_20210904.xml -c
-RUN ./build.sh cam-crv1126s2u-facial_gate.mk
-RUN FORCE_UNSAFE_CONFIGURE=1 ./build.sh
-ENTRYPOINT /copy_dist.sh
 
