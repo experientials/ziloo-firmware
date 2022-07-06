@@ -1,0 +1,4 @@
+huffman
+
+# For uploading artifacts
+awscli
