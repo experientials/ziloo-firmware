@@ -44,3 +44,5 @@ The build and testing is run primarily in Docker. The firmware can be tested wit
 Building the firmware also takes place in a Docker container. 
 Where possible all firmware will be built with the same docker container `ziloo/image-builder`.
 
+When working with Docker you disk can fill up quickly. It is a good idea to run `docker system prune` once finished on adjusting
+the build.

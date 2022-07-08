@@ -6,7 +6,7 @@ on:
 
 jobs:
   hello_docker:
-    runs-on: self-hosted
+    runs-on: Linode
     name: A job to say hello within docker
     steps:
       - name: Check out repository
