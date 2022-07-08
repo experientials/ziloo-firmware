@@ -1,0 +1,6 @@
+[submodule "device/rp2/picoprobe"]
+	path = device/rp2/picoprobe
+	url = https://github.com/raspberrypi/picoprobe
+[submodule "device/circuitpython"]
+	path = device/circuitpython
+	url = git@github.com:experientials/circuitpython.git

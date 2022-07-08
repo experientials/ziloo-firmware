@@ -1,0 +1,56 @@
+name: CircuitPython
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the RP2040 branch
+  push:
+    branches: [ hw/net ]
+    paths:
+      - 'device/rp2/**/*'
+      - 'device/circuitpython'      
+  pull_request:
+    branches: [ hw/net ]
+    paths:
+      - 'device/rp2/**/*'
+      - 'device/circuitpython'      
+
+jobs:
+  build:
+    runs-on: [Linode]
+    container: ziloo/image-builder
+    name: CP Firmware
+    strategy:
+      matrix:
+        board: [ziloo.ziloo_auto, ziloo.raspberry_pi_pico]
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Check out the repo
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: create required directories
+        run: |
+          mkdir -p workspace
+      - name: Versions
+        run: |
+          gcc --version
+          arm-none-eabi-gcc --version
+          python3 --version
+      - name: mpy-cross
+        run: make -C mpy-cross -j2
+        working-directory: circuitpython
+      - name: Setup build failure matcher
+        run: echo "::add-matcher::$GITHUB_WORKSPACE/.github/workflows/match-build-fail.json"
+      - name: build
+        run: python3 -u build_release_files.py
+        working-directory: circuitpython/tools
+        env:
+          BOARDS: ${{ matrix.board }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.board }}
+          path: bin/${{ matrix.board }}
+            
