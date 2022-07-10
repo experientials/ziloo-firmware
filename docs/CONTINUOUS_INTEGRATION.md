@@ -23,6 +23,19 @@ You can build a docker image locally by,
 
 To push result image into registry use --push or to load image into docker use --load 
 
+### Trying out GitHub Actions locally
+
+- [How to test Github Actions locally](https://minompi.medium.com/how-to-test-github-actions-locally-5a6dad8da367)
+
+To run the CircuitPython build do `act -j cp-build`.
+
+Or to run it directly
+
+> cd device/circuitpython
+> make fetch-submodules
+> cd tools
+> BOARDS=ziloo_auto python3 -u build_release_files.py 
+
 
 ### Setup Raspberry Pi Actions runner
 
