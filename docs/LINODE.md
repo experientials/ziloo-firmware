@@ -2,7 +2,7 @@
 
 This is an x86 Ubuntu 20.04LTS server hosted on Linode. It has 16GB RAM and 320GB SSD.
 
-* IP 172.105.74.116 2a01:7e01::f03c:92ff:fec3:48bb
+* IP 172.105.246.8 2a01:7e01::f03c:92ff:fec3:48bb
 
 It should build the Ziloo Firmware images that you already have defined. But instead of manually, it should happen automatically with Continuous Integration via GitHub Actions.
 
@@ -24,7 +24,7 @@ P.S. Please don't commit directly to branches main/builder. If need be create ne
 
 ## Connecting via SSH
 
-> ssh root@172.105.74.116
+> ssh root@172.105.246.8
 > ssh -t thepia@lish-frankfurt.linode.com ziloo-builder-eu-central
 
 To gain access please provide me with a SSH public key that I can add.

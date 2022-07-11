@@ -40,9 +40,9 @@ RUN gem update --system && \
 
 # RUN pip3 install setup-tools
 
-COPY etc/ /etc/
+COPY etc/ /workspace/etc/
 
-RUN /etc/install-genimage.sh
+RUN /workspace/etc/install-genimage.sh
 
 
 FROM base-builder as ziloo-builder
@@ -75,11 +75,19 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 # In order to enable derived images to install more we leave apt config alone
 #  rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install -r /etc/requirements-ci.txt
+RUN pip3 install -r /workspace/etc/requirements-ci.txt
 
 # Installed via apt
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/bin/repo
 RUN chmod a+rx /usr/bin/repo
-RUN git config --global user.email hello@thepia.com && git config --global user.name "Henrik Vendelbo" && git config --global color.ui false
+RUN git config --global user.email hello@thepia.com && git config --global user.name "Ziloo Avatar" && git config --global color.ui false
+
+RUN git clone https://github.com/NXPmicro/mfgtools.git /mfgtools
+RUN apt-get install -y libusb-1.0-0-dev libbz2-dev zlib1g-dev libzstd-dev pkg-config cmake libssl-dev g++
+RUN cd /mfgtools && cmake . && make
+RUN cp /mfgtools/uuu/uuu /usr/bin
+RUN chmod a+rx /usr/bin/uuu
+
+WORKDIR /workspace
 
 ENTRYPOINT [ "/etc/hello.sh" ]

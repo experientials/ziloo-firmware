@@ -1,0 +1,12 @@
+version: '3'
+services:
+  ziloo-builder:
+    container_name: ziloo-builder
+    image: ziloo/image-builder
+    platform: "linux/amd64"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes: 
+    - ./etc:/workspace/etc
+    - ./dist:/workspace/dist
+    - ./device/imx8:/workspace/device/imx8
