@@ -16,7 +16,9 @@ jobs:
             - name: create required directories
               run: mkdir workspace
             - name: Run with Docker Compose
-              run: docker-compose up -d
+              run: |
+                docker pull ziloo/image-builder
+                docker-compose up -d
             - name: repo from ADLINK i.MX manifest
               run: |
                 docker compose exec --workdir=/workspace ziloo-builder repo init -u https://github.com/experientials/ziloo-firmware -b manifests/lec-imx-yocto -m adlink-lec-imx8mp-yocto-hardknott_1v4.xml
