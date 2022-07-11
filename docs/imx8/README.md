@@ -14,6 +14,49 @@ Source code and build scripts are found under [device/imx8](./device/imx8/README
 
 ![I-Pi_SMARC-IMX8M-PLUS](./I-Pi_SMARC-IMX8M-PLUS-Float_cbe8788c-a020-40f6-91d7-7b350d4ba85c.png)
 
+## I-Pi_SMARC-IMX8M-PLUS Build
+
+The board build runs within `imx-yocto-bsp` based on https://github.com/ADLINK/adlink-manifest. See [build instructions](https://www.ipi.wiki/pages/imx8mp-docs?page=HowToBuildYocto.html).
+
+Run the following command on your host system to provoke the yocto image building process.
+
+> $ bitbake imx-image-full
+
+After the build is complete, disk images will be located at work-dir/build-dir/tmp/deploy/image/lec-imx8mp/
+
+The build should generate the following firmware `imx-image-full-lec-imx8mp.wic.bz2`.
+This has the file system image (without bootloader). 
+The twin file ending in `.tar.bz2` holds the file system tree.
+
+Boot pins,
+
+- SD Card 0110
+- eMMC 1000
+- Recovery 0001
+
+
+## Flashing Firmware
+
+The easy approach is to burn the image to an SD Card. Use,
+
+- balena Etcher
+- `dd`
+- rufus
+
+Otherwise put board in recovery mode to flash eMMC with `mfgtool`/`uuu`.
+
+- [Flash Yocto or Android Image to eMMC](https://docs.ipi.wiki/SMARC/ipi-smarc-imx8mp/HowToFlashImageeMMC.html#Flash-Yocto-or-Android-Image)
+- 
+
+
+Install mfgtool
+
+```
+git clone https://github.com/NXPmicro/mfgtools.git
+cd mfgtools
+sudo apt-get install libusb-1.0-0-dev libbz2-dev zlib1g-dev libzstd-dev pkg-config cmake libssl-dev g++
+cmake . && make
+```
 
 
 ## Notes to integrate

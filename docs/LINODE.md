@@ -24,10 +24,30 @@ P.S. Please don't commit directly to branches main/builder. If need be create ne
 
 ## Connecting via SSH
 
+Regular SSH
 > ssh root@172.105.246.8
+
+LISH access indirect
 > ssh -t thepia@lish-frankfurt.linode.com ziloo-builder-eu-central
 
 To gain access please provide me with a SSH public key that I can add.
+
+To copy the build output
+> scp root@172.105.246.8:~/imx-yocto-bsp/build/tmp/deploy/images/lec-imx8mp/imx-image-full-lec-imx8mp.tar.bz2 .
+
+
+## Setup Linode with correct keys
+
+Use `ssh-copy-id`. [How to use SCP (secure copy) with ssh key authentication](https://www.techrepublic.com/article/how-to-use-secure-copy-with-ssh-key-authentication/)
+
+> scp -i ~/.ssh/id_rsa.pub root@172.105.74.116:~/imx-yocto-bsp/build/tmp/deploy/images/lec-imx8mp/*.bz2 .
+
+Artifacts
+
+- imx-image-full-lec-imx8mp-*.rootfs.tar.bz2
+- imx-image-full-lec-imx8mp-*.rootfs.wic.bz2
+- imx-image-full-lec-imx8mp.tar.bz2
+- imx-image-full-lec-imx8mp.wic.bz2
 
 
 ## Docker Support

@@ -8,17 +8,25 @@ on:
             - 'device/*'
             - 'manifests/*'
 jobs:
-    build:
-        runs-on: self-hosted
+    imx8-build:
+        runs-on: [big-build]
+        name: i.MX8 build running in Docker
         steps:
+            - uses: actions/checkout@v2
             - name: create required directories
+              run: mkdir workspace
+            - name: Run with Docker Compose
+              run: docker-compose up -d
+            - name: repo from ADLINK i.MX manifest
               run: |
-                mkdir workspace
+                docker compose exec --workdir=/workspace ziloo-builder repo init -u https://github.com/experientials/ziloo-firmware -b manifests/lec-imx-yocto -m adlink-lec-imx8mp-yocto-hardknott_1v4.xml
+                docker compose exec --workdir=/workspace ziloo-builder repo sync
             # - name: building base image
-            #   run: docker build -f device/builder-nxp.Dockerfile -t base-repo-image --target base-repo-image .
+            #   run: docker build -f Dockerfile -t base-repo-image --target base-repo-image .
             # - name: updating and building inside docker
             #   run: docker run --rm -v ${PWD}/dist/build/:/dist imx8-run
             # - uses: actions/upload-artifact@v2
             #   with:
             #     name: rv1109-ai-uvc
             #     path: dist/build/rv1109-ai-uvc
+            # docker run --network container:ziloo-builder appropriate/curl -s --retry 10 --retry-connrefused http://localhost:5000/

@@ -90,4 +90,4 @@ RUN chmod a+rx /usr/bin/uuu
 
 WORKDIR /workspace
 
-ENTRYPOINT [ "/etc/hello.sh" ]
+ENTRYPOINT [ "/workspace/etc/hello.sh" ]
