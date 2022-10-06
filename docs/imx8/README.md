@@ -5,7 +5,9 @@ This is concerned with getting up and running on two carrier boards and later on
 - [SB-UCM-iMX8PLUS](https://www.compulab.com/products/carrier-boards/sb-ucmimx8plus-carrier-board/#diagram).
 - [I-Pi_SMARC-IMX8M-PLUS](https://www.ipi.wiki/pages/imx8mp-docs)
 - [SMARC Modules](https://sget.org/standards/)
-- 
+- [NXP Embedded Linux Releases](https://www.nxp.com/design/software/embedded-software/i-mx-software/embedded-linux-for-i-mx-applications-processors:IMXLINUX?)
+- [NXP i.MX Repo Manifest](https://github.com/nxp-imx/imx-manifest/blob/imx-linux-kirkstone/)
+- [Building i.MX BSP in Docker](https://github.com/nxp-imx/imx-docker)
 
 Source code and build scripts are found under [device/imx8](./device/imx8/README.md)
 
@@ -35,7 +37,10 @@ Boot pins,
 - Recovery 0001
 
 
-## Flashing Firmware
+## Flashing Firmware I-Pi SMART
+
+The I-Pi card supports all the boot modes of the i.MX8M Plus.
+This allows network booting and uploading via USB CDC Serial.
 
 The easy approach is to burn the image to an SD Card. Use,
 
@@ -59,7 +64,28 @@ cmake . && make
 ```
 
 
+## Flashing Firmware SB UCM iMX8PLUS
+
+* Prepare a bootable SD card (Use balenaEtcher to write *.wic image)
+* Insert the card in the SD slot
+* Connect monitor mouse and keyboard
+* Enable ALT_BOOT while triggering RESET
+* Open `cl-deploy` via terminal or task bar
+* Select `dev/mmcblk*` as destination and continue
+
+This will erase and overwrite the internal eMMC. 
+Expect it to take 30 minutes.
+Make sure to remove the SD card before rebooting.
+
+
+
 ## Notes to integrate
 
 The I-Pi board has 4 dip switches on the board hidden near the Ethernet connectors. Use 1000 for eMMC / 0110 for SD booting.
 
+- [Using an SSD via mPCIe on our i.MX8 Nitrogen boards](https://boundarydevices.com/using-an-ssd-via-mpcie-on-our-i-mx8-nitrogen-boards/)
+
+
+## V4L2 vs libcamera
+
+The cameras must be have working drivers and commandline tools. For now the focus will be [V4L2](https://www.linuxtv.org) as it matures we will adopt [libcamera](https://libcamera.org). Ziloo is simple as it has a single Camera Device.

@@ -31,6 +31,7 @@ Compute Engine Structure on i.MX 8M
 * Yocto Hardknott based (use ziloo-firmware#manifests/lec-imx-yocto branch to init repo)
 * Make the Action use the `ziloo/image-builder` container.
 * Use `/workspace` to store build files enabling switching to docker compose later
+* Add [Camera Support](./camera/README.md)
 * Make sure the firmware supports stereo CSI camera modules via V4L2
 * Make sure the firmware supports USB camera module (either USB port)
 * Board can boot from USB stick
