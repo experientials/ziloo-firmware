@@ -13,7 +13,7 @@
   <remote fetch="https://git.openembedded.org"  name="python2"/>
   <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
   <remote fetch="https://source.codeaurora.org/external/imxsupport" name="imx-support"/>
-
+  
   <project remote="yocto" name="poky" path="sources/poky" revision="4d7162798ec19c726877e85509e4c7a99eb6576d" upstream="honister"/>
 
   <project remote="oe" name="meta-openembedded" path="sources/meta-openembedded" revision="4647e3ea3708d30eeb0149f6d5626c9576bff520" upstream="honister"/>
@@ -41,4 +41,5 @@
 
   <project remote="imx-support" revision="4bbe714267b730df020438fe83ae2c7c91708045" name="meta-nxp-demo-experience" path="sources/meta-nxp-demo-experience" />
 
+  <project remote="CAF" revision="c3cdc6c2550161bcddfb6d6fa7e30f37e1474caa" name="imx-atf" path="sources/imx-atf" />
 </manifest>
