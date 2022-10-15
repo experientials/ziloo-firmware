@@ -11,3 +11,5 @@ services:
     - ./etc:/workspace/etc
     - ./dist:/workspace/dist
     - ./device/imx8:/workspace/device/imx8
+    - ./mcuxsdk:/workspace/mcuxsdk
+    - ./sstate-cache:/workspace/sstate-cache

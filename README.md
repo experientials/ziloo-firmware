@@ -30,6 +30,16 @@ USB Devices
 - Video Stream (V4L2 based)
 
 
+## Kernel Support
+
+The kernel booted must support connectivity primarily over the two USB ports
+
+- [CDC ECM Ethernet](https://www.kernel.org/doc/html/v5.3/usb/gadget_multi.html)
+- [RNDIS Ethernet](https://www.kernel.org/doc/html/v5.3/usb/gadget_multi.html)
+- [USB CDC ACM Serial](https://www.kernel.org/doc/html/v5.3/usb/gadget_multi.html)
+
+
+
 ## Adding New Firmware + Hardware combination
 
 To add a new hardware core to build for create a new branch under `hw/` naming it.

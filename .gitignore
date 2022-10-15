@@ -77,3 +77,11 @@ user.props
 
 # Uncrustify formatting
 *.uncrustify
+
+# /workspace downloads using west/repo
+######
+.repo/
+mcuxsdk/
+sources/
+sstate-cache/
+

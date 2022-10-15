@@ -9,16 +9,17 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     binutils bash gzip bzip2 tar lzop cpio python python-dev zip unzip file bc chrpath screen \
     u-boot-tools device-tree-compiler time tcl \
-    autoconf libtool automake coreutils less \
+	autoconf libtool automake coreutils less \
     time lz4 device-tree-compiler fakeroot gnupg \
     mtools parted libyaml-dev libxml2-utils libudev-dev libusb-1.0-0-dev \
-    curl wget sed net-tools asciidoc git git-core rsync openssh-client \
+    curl wget net-tools sed asciidoc git git-core rsync openssh-client \
 
     perl ruby \
-    python3 python3-dev \
+	python3 python3-dev \
     python3-markdown python3-pip \
-    python3-distutils python3-setuptools \
-    python3-pexpect python3-git python3-jinja2 python3-subunit \
+    python3-pexpect \
+	python3-distutils python3-setuptools \
+    python3-git python3-jinja2 python3-subunit \
 
 	# Disk Image building
     binfmt-support \
@@ -58,7 +59,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     texinfo xterm file iputils-ping iproute2 \
     diffstat gcc-multilib locales zstd desktop-file-utils \
     pkg-config swig expect expect-dev \
-#   zstd provides pzstd
+    # zstd provides pzstd
 
     # QEMU emulation
     qemu qemu-user-static
@@ -73,7 +74,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     gcc-aarch64-linux-gnu \
     gcc-arm-linux-gnueabihf libssl-dev liblz4-tool genext2fs xsltproc \
     g++-7 libstdc++-7-dev autotools-dev 
-#   liblz4-tool provides lz4c and lz4
+    # liblz4-tool provides lz4c and lz4
 
 # In order to enable derived images to install more we leave apt config alone
 #  rm -rf /var/lib/apt/lists/*
@@ -93,8 +94,14 @@ RUN chmod a+rx /usr/bin/uuu
 
 WORKDIR /workspace
 
-ENTRYPOINT [ "/workspace/etc/hello.sh" ]
+# Embedded ARM toolchain
+# https://github.com/strongly-typed/docker-arm-none-eabi-gcc/blob/master/Dockerfile
+RUN cd /workspace
+RUN wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2 | tar -xj
+ENV ARMGCC_DIR=/workspace/gcc-arm-none-eabi-9-2019-q4-major
 
+
+ENTRYPOINT [ "/workspace/etc/hello.sh" ]
 
 
 FROM ziloo-builder as ziloo-builder-user
