@@ -1,0 +1,30 @@
+name: Hello
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  hello_big_build:
+    runs-on: big-build
+    container: ziloo/image-builder-user
+    name: Hello big build!
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Hello via docker
+        run: |
+          echo "The time was ${{ steps.hello.outputs.time }}"    
+          uname
+          whoami
+  which_os_docker:
+    runs-on: self-hosted
+    container: ziloo/image-builder-user
+    name: A job that runs within docker
+    steps:
+      - name: Hello via docker
+        run: |
+          echo "The time was ${{ steps.hello.outputs.time }}"    
+          uname
+          whoami
+          

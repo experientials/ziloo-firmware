@@ -1,0 +1,11 @@
+#!/bin/sh
+# This setup script can be migrated to meta-imx-929
+
+chown -R build:build .repo sources
+ln -s etc/setup-bitbake setup-bitbake
+ln -s sources/meta-bsp-929/tools/compulab-setup-env compulab-setup-env
+ln -s sources/meta-imx/tools/imx-setup-release.sh imx-setup-release.sh
+ln -s sources/base/setup-environment setup-environment
+
+git config --global user.email "henrik@thepia.com"
+git config --global user.name "Henrik Vendelbo"

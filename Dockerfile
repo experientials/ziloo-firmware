@@ -92,6 +92,9 @@ RUN cd /mfgtools && cmake . && make
 RUN cp /mfgtools/uuu/uuu /usr/bin
 RUN chmod a+rx /usr/bin/uuu
 
+RUN git config --global user.email "henrik@thepia.com" && \
+    git config --global user.name "Henrik Vendelbo"
+
 WORKDIR /workspace
 
 # Embedded ARM toolchain
@@ -139,6 +142,9 @@ ENV UID=1000
 ENV GID=1000
 ENV USER=build
 RUN groupadd -g $GID $USER && \
-useradd -u $UID -g $GID -ms /bin/bash $USER && \
-usermod -a -G sudo $USER && \
-usermod -a -G users $USER 
+    useradd -u $UID -g $GID -ms /bin/bash $USER && \
+    usermod -a -G sudo $USER && \
+    usermod -a -G users $USER  && \
+    chown $USER:$USER /workspace
+
+USER $USER
