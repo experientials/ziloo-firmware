@@ -46,6 +46,16 @@ COPY etc/ /workspace/etc/
 
 RUN /workspace/etc/install-genimage.sh
 
+# Set up locales
+RUN locale-gen en_US.UTF-8 \
+  && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+# Yocto needs 'source' command for setting up the build environment, so replace
+# the 'sh' alias to 'bash' instead of 'dash'.
+RUN rm /bin/sh && ln -s bash /bin/sh
+
 
 FROM base-builder as ziloo-builder
 
@@ -81,9 +91,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
 RUN pip3 install -r /workspace/etc/requirements-ci.txt
 
-# Installed via apt
-RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/bin/repo
-RUN chmod a+rx /usr/bin/repo
+# Install repo
+ADD https://storage.googleapis.com/git-repo-downloads/repo /usr/local/bin/
+RUN chmod 755 /usr/local/bin/repo
+
 RUN git config --global user.email hello@thepia.com && git config --global user.name "Ziloo Avatar" && git config --global color.ui false
 
 RUN git clone https://github.com/NXPmicro/mfgtools.git /mfgtools
@@ -91,9 +102,6 @@ RUN apt-get install -y libusb-1.0-0-dev libbz2-dev zlib1g-dev libzstd-dev pkg-co
 RUN cd /mfgtools && cmake . && make
 RUN cp /mfgtools/uuu/uuu /usr/bin
 RUN chmod a+rx /usr/bin/uuu
-
-RUN git config --global user.email "henrik@thepia.com" && \
-    git config --global user.name "Henrik Vendelbo"
 
 WORKDIR /workspace
 
@@ -126,13 +134,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt install \
 RUN DEBIAN_FRONTEND=noninteractive apt clean -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# ----------------------------------------------------------------------
-# Set up locales
-RUN locale-gen en_US.UTF-8 \
-  && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
 
+# TODO consider ARG support like https://github.com/nxp-imx/imx-docker/blob/master/Dockerfile-Ubuntu-20.04
 
 # ----------------------------------------------------------------------
 # Create user called build (because we can not run Yocto Project as root)
@@ -146,5 +149,10 @@ RUN groupadd -g $GID $USER && \
     usermod -a -G sudo $USER && \
     usermod -a -G users $USER  && \
     chown $USER:$USER /workspace
+
+# Add your user to sudoers to be able to install other packages in the container.
+# ARG USER
+RUN echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER} && \
+    chmod 0440 /etc/sudoers.d/${USER}
 
 USER $USER
