@@ -2,7 +2,7 @@ name: i.MX8 Firmware Build Runner
 
 on:
     push:
-        branches: [ hw/main ]
+        branches: [ main ]
         paths:
             - '.github/workflows/imx8-firmware.yml'
             - 'device/imx8/**/*'
