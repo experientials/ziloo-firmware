@@ -10,7 +10,7 @@ on:
 jobs:
     ucm-imx8-build:
         runs-on: [big-build]
-        name: i.MX8 build running in Docker
+        name: i.MX8 build running in Linode
         env:
           MACHINE: ucm-imx8m-plus
           IMX_RELEASE: imx-5.15.5-1.0.0
