@@ -59,8 +59,9 @@ RUN rm /bin/sh && ln -s bash /bin/sh
 
 FROM base-builder as ziloo-builder
 
-RUN apt-get update && apt upgrade -y
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update && apt upgrade -y
+RUN apt install -y --no-install-recommends \
     mercurial subversion cvs liblscp-dev \
     sshpass ssh-askpass \
     libsigsegv2  libdrm-dev \
@@ -74,7 +75,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     # QEMU emulation
     qemu qemu-user-static
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+RUN apt install -y --no-install-recommends \
 
     # Docs generation
     xmlto help2man groff libreoffice-writer vim bash-completion \

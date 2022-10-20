@@ -1,0 +1,35 @@
+name: i.MX8 Firmware Build Runner
+
+on:
+    push:
+        branches: [ hw/main ]
+        paths:
+            - '.github/workflows/imx8-firmware.yml'
+            - 'device/imx8/**/*'
+            - 'device/*'
+jobs:
+    ucm-imx8-build:
+        runs-on: [big-build]
+        name: i.MX8 build running in Docker
+        env:
+          MACHINE: ucm-imx8m-plus
+          IMX_RELEASE: imx-5.15.5-1.0.0
+          DISTRO: fsl-imx-xwayland
+          # IMAGES: imx-image-multimedia
+          IMAGES: imx-image-core
+          BRANCH: imx-linux-honister
+        steps:
+            - uses: actions/checkout@v2
+            - name: Setup sources and scripts
+              run: |
+                # ./scripts/sstate-cache-management.sh --remove-duplicated -d --cache-dir=<path to sstate-cached>
+                repo init -u https://github.com/experientials/ziloo-firmware -b ${BRANCH} -m ${IMX_RELEASE}_experientials.xml
+                mkdir -p downloads
+                mkdir -p cache
+                mkdir -p sstate-cache
+                mkdir -p sources
+                repo sync -j`nproc`
+            - name: bitbake
+              run: |
+                . etc/setup-bitbake -b build-${MACHINE}
+                bitbake -k ${IMAGES}
