@@ -9,6 +9,7 @@ jobs:
     ucm-imx8-artifacts:
         runs-on: [big-build]
         name: i.MX8 artifacts in Linode
+        if: ${{ false }}
         env:
           MACHINE: ucm-imx8m-plus
           IMX_RELEASE: imx-5.15.5-1.0.0
@@ -18,6 +19,11 @@ jobs:
           BRANCH: imx-linux-honister
         steps:
             - uses: actions/checkout@v2
+            - name: Global directories
+            - run: |
+                mkdir -p ~/yocto-downloads
+                ln -s ~/yocto-downloads downloads
+                mkdir -p sstate-cache
             - name: tar
               run: |
                 tar cvfj build-${MACHINE}/tmp/deploy/ucm_imx8m_plus.deb.tar.bz build-${MACHINE}/tmp/deploy/deb/ucm_imx8m_plus/
