@@ -1,9 +1,10 @@
-name: Hello
+name: Smoke tests
 
 on:
   push:
     branches: [ main ]
-
+    paths:
+        - '.github/workflows/smoke-tests.yml'
 jobs:
   hello_big_build:
     runs-on: big-build

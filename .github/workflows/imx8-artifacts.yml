@@ -20,8 +20,8 @@ jobs:
             - uses: actions/checkout@v2
             - name: tar
               run: |
-                tar cvfj tmp/deploy/ucm_imx8m_plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
-                tar cvfj tmp/deploy/ucm-imx8m-plus.dtb.tar.bz tmp/deploy/images/ucm-imx8m-plus/*.dtb
+                tar cvfj build-${MACHINE}/tmp/deploy/ucm_imx8m_plus.deb.tar.bz build-${MACHINE}/tmp/deploy/deb/ucm_imx8m_plus/
+                tar cvfj build-${MACHINE}/tmp/deploy/ucm-imx8m-plus.dtb.tar.bz build-${MACHINE}/tmp/deploy/images/ucm-imx8m-plus/*.dtb
             - uses: actions/upload-artifact@v2
               with:
                 name: Image
