@@ -1,0 +1,60 @@
+name: i.MX8 Artifacts
+
+on:
+    push:
+        branches: [ main ]
+        paths:
+            - '.github/workflows/imx8-artifacts.yml'
+jobs:
+    ucm-imx8-artifacts:
+        runs-on: [big-build]
+        name: i.MX8 artifacts in Linode
+        env:
+          MACHINE: ucm-imx8m-plus
+          IMX_RELEASE: imx-5.15.5-1.0.0
+          DISTRO: fsl-imx-xwayland
+          # IMAGES: imx-image-multimedia
+          IMAGES: imx-image-core
+          BRANCH: imx-linux-honister
+        steps:
+            - uses: actions/checkout@v2
+            - name: tar
+              run: |
+                tar cvfj tmp/deploy/ucm_imx8m_plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
+                tar cvfj tmp/deploy/ucm-imx8m-plus.dtb.tar.bz tmp/deploy/images/ucm-imx8m-plus/*.dtb
+            - uses: actions/upload-artifact@v2
+              with:
+                name: Image
+                path: build-${MACHINE}/tmp/deploy/images/ucm-imx8m-plus/Image
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core-${MACHINE}.tar.bz2
+                path: build-${MACHINE}/tmp/deploy/images/${MACHINE}/imx-image-core-${MACHINE}.tar.bz2
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core-${MACHINE}.wic.bz2
+                path: build-${MACHINE}/tmp/deploy/images/${MACHINE}/imx-image-core-${MACHINE}.wic.bz2
+            - uses: actions/upload-artifact@v2
+              with:
+                name: modules-${MACHINE}.tgz
+                path: build-${MACHINE}/tmp/deploy/images/${MACHINE}/modules-${MACHINE}.tgz
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot.bin
+                path: build-${MACHINE}/tmp/deploy/images/${MACHINE}/u-boot.bin
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot.bin-sd
+                path: build-${MACHINE}/tmp/deploy/images/${MACHINE}/u-boot.bin-sd
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot-compulab-initial-env-sd
+                path: build-${MACHINE}/tmp/deploy/images/${MACHINE}/u-boot-compulab-initial-env-sd 
+            - uses: actions/upload-artifact@v2
+              with:
+                name: ucm_imx8m_plus.deb.tar.bz
+                path: build-${MACHINE}/tmp/deploy/ucm_imx8m_plus.deb.tar.bz
+            - uses: actions/upload-artifact@v2
+              with:
+                name: ucm_imx8m_plus.dtb.tar.bz
+                path: build-${MACHINE}/tmp/deploy/ucm_imx8m_plus.dtb.tar.bz
