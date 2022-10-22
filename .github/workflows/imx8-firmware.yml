@@ -25,11 +25,47 @@ jobs:
                 # ./scripts/sstate-cache-management.sh --remove-duplicated -d --cache-dir=<path to sstate-cached>
                 repo init -u https://github.com/experientials/ziloo-firmware -b ${BRANCH} -m ${IMX_RELEASE}_experientials.xml
                 mkdir -p downloads
-                mkdir -p cache
-                mkdir -p sstate-cache
                 mkdir -p sources
                 repo sync -j`nproc`
             - name: bitbake
               run: |
                 . etc/setup-bitbake -b build-${MACHINE}
                 bitbake -k ${IMAGES}
+                tar cvfj tmp/deploy/ucm_imx8m_plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
+                tar cvfj tmp/deploy/ucm-imx8m-plus.dtb.tar.bz tmp/deploy/images/ucm-imx8m-plus/*.dtb
+            - uses: actions/upload-artifact@v2
+              with:
+                name: Image
+                path: tmp/deploy/images/ucm-imx8m-plus/Image
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core-ucm-imx8m-plus.tar.bz2
+                path: tmp/deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.tar.bz2
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core-ucm-imx8m-plus.wic.bz2
+                path: tmp/deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.wic.bz2
+            - uses: actions/upload-artifact@v2
+              with:
+                name: modules-ucm-imx8m-plus.tgz
+                path: tmp/deploy/images/ucm-imx8m-plus/modules-ucm-imx8m-plus.tgz
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot.bin
+                path: tmp/deploy/images/ucm-imx8m-plus/u-boot.bin
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot.bin-sd
+                path: tmp/deploy/images/ucm-imx8m-plus/u-boot.bin-sd
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot-compulab-initial-env-sd
+                path: tmp/deploy/images/ucm-imx8m-plus/u-boot-compulab-initial-env-sd 
+            - uses: actions/upload-artifact@v2
+              with:
+                name: ucm_imx8m_plus.deb.tar.bz
+                path: tmp/deploy/ucm_imx8m_plus.deb.tar.bz
+            - uses: actions/upload-artifact@v2
+              with:
+                name: ucm_imx8m_plus.dtb.tar.bz
+                path: tmp/deploy/ucm_imx8m_plus.dtb.tar.bz
