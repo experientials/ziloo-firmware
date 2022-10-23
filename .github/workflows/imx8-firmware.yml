@@ -35,9 +35,13 @@ jobs:
                 mkdir -p ~/yocto-sstate-cache
                 ln -s ~/yocto-sstate-cache sstate-cache
                 mkdir -p ~/yocto-tmp-deploy
+                rm -Rf ~/yocto-tmp-deploy/deb
+                rm -Rf ~/yocto-tmp-deploy/images
+                rm -Rf ~/yocto-tmp-deploy/licenses
                 mkdir -p tmp
                 ln -s ~/yocto-tmp-deploy tmp/deploy
                 bitbake -k ${IMAGES}
+                rm ~/yocto-tmp-deploy/*.bz
                 tar cvfj tmp/deploy/ucm_imx8m_plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
                 tar cvfj tmp/deploy/ucm-imx8m-plus.dtb.tar.bz tmp/deploy/images/ucm-imx8m-plus/*.dtb
             - uses: actions/upload-artifact@v2
