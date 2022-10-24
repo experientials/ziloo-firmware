@@ -93,7 +93,13 @@ You can build a docker image locally by,
 To push result image into registry use --push or to load image into docker use --load 
 
 
+## Raspberry Pi features
 
+- [Etckeeper](http://etckeeper.branchable.com)
+- [Wifi to ethernet routing](https://www.instructables.com/Share-WiFi-With-Ethernet-Port-on-a-Raspberry-Pi/) - [Script to run](https://github.com/arpitjindal97/raspbian-recipes/blob/master/wifi-to-eth-route.sh)
+
+Manually setting up the route didn't seem to work. Resetting `/etc` with `sudo git reset NNN` worked wonders.
+Perhaps the bridge option should be used.
 
 
 ## SD Card Format
@@ -101,10 +107,13 @@ To push result image into registry use --push or to load image into docker use -
 For development and debugging use an SD Card or USB stick. It must be partitioned,
 
 - With MBR FAT32 (diskutil eraseDisk FAT32 ALPINE MBR $(DISK))
-- 1Gb FAT32 boot partition
+- 1GB FAT32 boot partition
 - 3.4Gb extFS 4 rootfs partition
 
 An empty SD Card image is generated with `make ziloo-raw-image`, which will generate `ziloo-dev-card.img.zip`.
+
+As u-boot is on the eMMC or Flash chip it should be possible to create a dual-booting RPi-Alpine/Raspbian/Yocto SD Card
+that can be used everywhere. This will be explored more.
 
 
 ## Docker

@@ -71,7 +71,7 @@ jobs:
             - uses: actions/upload-artifact@v2
               with:
                 name: u-boot.bin
-                path: build-ucm-imx8m-plus/tmp/deploy/images/ucm-imx8m-plus/u-boot.bin
+                path:  ~/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot.bin
             - uses: actions/upload-artifact@v2
               with:
                 name: u-boot.bin-sd
@@ -83,36 +83,36 @@ jobs:
             - uses: actions/upload-artifact@v2
               with:
                 name: ucm_imx8m_plus.deb.tar.bz
-                path: ~/yocto-tmp-deploy/ucm_imx8m_plus.deb.tar.bz
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm_imx8m_plus.deb.tar.bz
             - uses: actions/upload-artifact@v2
               with:
                 name: ucm_imx8m_plus.dtb.tar.bz
-                path: ~/yocto-tmp-deploy/ucm_imx8m_plus.dtb.tar.bz
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm_imx8m_plus.dtb.tar.bz
             - uses: actions/upload-artifact@v2
               with:
                 name: tee.bin
-                path: ~/yocto-tmp-deploy/tee.bin
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/tee.bin
             - uses: actions/upload-artifact@v2
               with:
                 name: imx8mp_m7_TCM_hello_world.bin
-                path: ~/yocto-tmp-deploy/imx8mp_m7_TCM_hello_world.bin            
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_hello_world.bin            
             - uses: actions/upload-artifact@v2
               with:
                 name: imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin
-                path: ~/yocto-tmp-deploy/imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin                            
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin                            
             - uses: actions/upload-artifact@v2
               with:
                 name: imx8mp_m7_TCM_sai_low_power_audio.bin
-                path: ~/yocto-tmp-deploy/imx8mp_m7_TCM_sai_low_power_audio.bin            
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_sai_low_power_audio.bin            
             - uses: actions/upload-artifact@v2
               with:
                 name: imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin
-                path: ~/yocto-tmp-deploy/imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin                
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin                
             - uses: actions/upload-artifact@v2
               with:
                 name: imx-image-core.env
-                path: ~/yocto-tmp-deploy/imx-image-core.env
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core.env
             - uses: actions/upload-artifact@v2
               with:
                 name: imx-image-core-ucm-imx8m-plus.testdata.json
-                path: ~/yocto-tmp-deploy/imx-image-core-ucm-imx8m-plus.testdata.json                                
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.testdata.json                                
