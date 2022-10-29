@@ -42,7 +42,7 @@ jobs:
                 ln -s ~/yocto-tmp-deploy tmp/deploy
                 bitbake -k ${IMAGES}
                 rm ~/yocto-tmp-deploy/*.bz
-                tar cvfj tmp/deploy/ucm_imx8m_plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
+                tar cvfj tmp/deploy/ucm-imx8m-plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
                 tar cvfj tmp/deploy/ucm-imx8m-plus.dtb.tar.bz tmp/deploy/images/ucm-imx8m-plus/*.dtb
             - uses: actions/upload-artifact@v2
               with:
@@ -82,12 +82,12 @@ jobs:
                 path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-compulab-initial-env-sd 
             - uses: actions/upload-artifact@v2
               with:
-                name: ucm_imx8m_plus.deb.tar.bz
-                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm_imx8m_plus.deb.tar.bz
+                name: ucm-imx8m-plus.deb.tar.bz
+                path: ~/yocto-tmp-deploy/ucm-imx8m-plus.deb.tar.bz
             - uses: actions/upload-artifact@v2
               with:
-                name: ucm_imx8m_plus.dtb.tar.bz
-                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm_imx8m_plus.dtb.tar.bz
+                name: ucm-imx8m-plus.dtb.tar.bz
+                path: ~/yocto-tmp-deploy/ucm-imx8m-plus.dtb.tar.bz
             - uses: actions/upload-artifact@v2
               with:
                 name: tee.bin
