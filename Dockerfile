@@ -113,7 +113,7 @@ RUN wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/
 ENV ARMGCC_DIR=/workspace/gcc-arm-none-eabi-9-2019-q4-major
 
 
-ENTRYPOINT [ "/workspace/etc/hello.sh" ]
+ENTRYPOINT [ "/bin/bash" ]
 
 
 FROM ziloo-builder as ziloo-builder-user

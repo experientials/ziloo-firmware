@@ -85,3 +85,30 @@ mcuxsdk/
 sources/
 sstate-cache/
 
+# RPi builder home directory
+.Xauthority
+.bash_history
+.bash_logout
+.bashrc
+.cache/
+.config/
+.gitconfig
+.local/
+.pki/
+.pp_backup/
+.profile
+.ssh/
+.vnc/
+.vscode/
+.xsession-*
+/Bookshelf
+/Documents
+/Music
+/Public
+/Videos
+/Desktop
+/Downloads
+/Pictures
+/Templates
+/Videos
+/actions-runner
