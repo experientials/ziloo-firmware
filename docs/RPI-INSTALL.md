@@ -102,11 +102,16 @@ sudo ./svc.sh start
 
 ## Ethernet Internet gate
 
+- [Raspberry Pi 4 Model B WiFi Ethernet Bridge](https://www.willhaley.com/blog/raspberry-pi-wifi-ethernet-bridge/)
 - [Bridge internet to Ethernet from WiFi - Raspberry PI](https://www.elementzonline.com/blog/sharing-or-bridging-internet-to-ethernet-from-wifi-raspberry-pI)
+- [Raspberry Pi WiFi-to-ethernet bridge](https://github.com/mangefoo/wifi-ethernet-bridge)
+- 
 
 The `/etc` settings can be set up by `builder/etc` branch application.
 
-> sudo apt install dnsmasq
+> cd ~
+> sudo source etc/setup-rpi-bridge.sh
+> sudo reboot
 
 
 ### Packages to install
