@@ -2,14 +2,15 @@
 
 The raspberry pi is set up by installing required packages and adding it as an actions runner to GitHub.
 
-1. Setup script
-
-> curl -L https://raw.githubusercontent.com/experientials/ziloo-firmware/main/etc/setup-rpi-builder.sh | bash
-
-
 The RPi can be accessed via
 
 > ssh pi@ziloo-test
+
+The ziloo-firmware repository can be synced with the RPi by adding it as origin.
+
+> git remote add ziloo-test pi@ziloo-test:~
+
+This allows pushing changes the home repository on the Pi. Note that it doesn't check out the changes.
 
 
 ## Raspberry Pi demo environment
@@ -48,6 +49,9 @@ Expand the rootfs (extFS4) to fill up the rest of the first half
 
 Open raspi-config to enable SSH, Serial Port, 1-Wire, I2C.
 
+Run install commands in the `pi` home directory:
+
+> curl -L https://raw.githubusercontent.com/experientials/ziloo-firmware/main/.gitignore
 > curl -L https://raw.githubusercontent.com/experientials/ziloo-firmware/main/etc/setup-rpi-builder.sh | bash
 
 The script should now have set up [`etckeeper`](http://etckeeper.branchable.com/README/) to share `/etc`.
@@ -61,6 +65,10 @@ Upload the SSH key with GitHub account. Generate a unique key, or get it from eq
 
 > ssh-keygen -t ed25519 -C "ziloo@thepia.com"
 
+
+## /usr experiment
+
+This turned out to add 
 Setup the `usr` domain with all relevant software. In the future this would be linked to a separate partition
 with Git repository and working directory.
 
@@ -77,6 +85,20 @@ sudo git push --set-upstream origin builder/etc
 ```
 
 
+## GitHub Actions Runner
+
+1. [Create self-hosted runner](https://github.com/organizations/experientials/settings/actions/runners/new?arch=arm64&os=linux)
+2. [Configuring the self-hosted runner application as a service](https://docs.github.com/en/actions/hosting-your-own-runners/configuring-the-self-hosted-runner-application-as-a-service)
+
+Run configure with additional label `raspbian`, and id `RPi-n`.
+
+
+```sh
+cd ~/actions-runner
+sudo ./svc.sh install
+sudo ./svc.sh start
+```
+
 
 ## Ethernet Internet gate
 
@@ -91,38 +113,30 @@ The `/etc` settings can be set up by `builder/etc` branch application.
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    lzop python python-dev chrpath screen \
-    u-boot-tools device-tree-compiler time tcl \
-	autoconf libtool automake coreutils \
-    time lz4 fakeroot \
-    libyaml-dev libxml2-utils libudev-dev libusb-1.0-0-dev \
-    net-tools sed asciidoc openssh-client \
+    python python-dev ruby chrpath screen time \
+    time fakeroot \
+    libyaml-dev libxml2-utils \
+    net-toolsd openssh-client \
 
-    ruby \
-    python3-markdown \
-    python3-git python3-subunit \
-
-    language-pack-en m4 bison flex fakeroot libparse-yapp-perl python-pysqlite2 \
-    cmake intltool pkg-config patch patchutils
+    python3-markdown python3-git python3-subunit \
+    language-pack-en fakeroot libparse-yapp-perl python-pysqlite2 \
 
     mercurial subversion cvs liblscp-dev \
     libsigsegv2  libdrm-dev \
     libncurses5 libncurses5-dev libglib2.0-dev libgtk2.0-dev libglade2-dev \
-    gawk socat xz-utils libegl1-mesa libgl1-mesa-dev libsdl1.2-dev pylint3 mesa-common-dev \
-    texinfo xterm \
-    diffstat gcc-multilib zstd desktop-file-utils \
+    libegl1-mesa libgl1-mesa-dev libsdl1.2-dev pylint3 mesa-common-dev \
+    gcc-multilib zstd \
     swig expect expect-dev \
-    # zstd provides pzstd
+    # zstd provides pzstd \
 
     # QEMU emulation
-    qemu qemu-user-static
+    qemu qemu-user-static \
 
     # Docs generation
-    xmlto help2man groff libreoffice-writer vim bash-completion \
-    # missing packages: fop dblatex texi2html docbook-utils   
+    libreoffice-writer vim bash-completion \
+    # missing packages: fop dblatex texi2html docbook-utils \  
 
     # GCC
     gcc-aarch64-linux-gnu \
-    gcc-arm-linux-gnueabihf libssl-dev liblz4-tool genext2fs xsltproc \
-    g++-7 libstdc++-7-dev autotools-dev 
-    # liblz4-tool provides lz4c and lz4
+    gcc-arm-linux-gnueabihf libssl-dev  xsltproc \
+    g++-7 libstdc++-7-dev autotools-dev

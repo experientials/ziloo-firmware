@@ -8,13 +8,17 @@ hostname -i
 sudo apt install gparted etckeeper minicom code
 
 # Docs generation support
-sudo apt install xmlto help2man groff libreoffice-writer vim bash-completion fop dblatex texi2html docbook-utils   
+sudo apt install xmlto help2man groff libreoffice-writer vim bash-completion fop dblatex texi2html docbook-utils asciidoc xmlto help2man groff  
 
 # Networking support
-sudo apt install dnsmasq u-boot-tools tftp tftpd sshpass ssh-askpass
+sudo apt install dnsmasq u-boot-tools tftp tftpd sshpass ssh-askpass socat
 
 # Disk Image building
-sudo apt install mtools parted binfmt-support debootstrap dosfstools fdisk gdisk kpartx xxd squashfs-tools u-boot-tools
+sudo apt install mtools parted binfmt-support debootstrap dosfstools fdisk gdisk kpartx xxd squashfs-tools u-boot-tools genext2fs xz-utils lz4 liblz4-tool 
+
+# Compiling
+sudo apt install autoconf libtool automake diffstat libudev-dev libusb-1.0-0-dev gawk \
+    cmake intltool pkg-config patch patchutils m4 bison flex tcl lzop texinfo xterm
 
 # Git user
 sudo git config --global user.email "henrik@thepia.com"
@@ -23,8 +27,11 @@ sudo git config --global user.name "Henrik Vendelbo"
 cd ~
 git init
 git remote add origin https://github.com/experientials/ziloo-firmware.git
-git fetch
-git branch builder/home
+git fetch origin builder/home:builder/home
+git branch --set-upstream-to=origin/builder/home builder/home
+git symbolic-ref HEAD refs/heads/builder/home
+git reset --hard
+
 
 # etckeeper
 sudo etckeeper init /etc
