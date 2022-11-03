@@ -21,19 +21,34 @@ To run from a developer machine refer to the specific hardware branch for the sp
 
 ### Setup big-build
 
-    sudo apt install docker docker-compose
-    sudo snap remove git-remove
-    sudo curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
-    sudo chmod a+x /usr/local/bin/repo
-    
+In order to ensure that nodes can build the OpenEmbedded firmware install the runner on the machine 
+and trigger the Install Build Packages workflow manually from the GitHub website.
+
+The runner is installed by running scripts similar to these:
+
     mkdir actions-runner && cd actions-runner
     curl -o actions-runner-linux-x64-2.298.2.tar.gz -L https://github.com/actions/runner/releases/download/v2.298.2/actions-runner-linux-x64-2.298.2.tar.gz
     echo "0bfd792196ce0ec6f1c65d2a9ad00215b2926ef2c416b8d97615265194477117  actions-runner-linux-x64-2.298.2.tar.gz" | shasum -a 256 -c
     tar xzf ./actions-runner-linux-x64-2.298.2.tar.gz
 
+Set up the runner as a service:
+
     ./config.sh --url https://github.com/experientials --token AAARXPT4IIYKRVKLUEO4IITDMO6GQ
     sudo ./svc.sh install
     sudo ./svc.sh start
+
+Allow the runner to install packages:
+
+    echo henrik ALL=(ALL:ALL) NOPASSWD:ALL | sudo tee -a /etc/sudoers
+
+
+Trigger the workflow `Install Build Packages` under [Ziloo Firmware Actions](https://github.com/experientials/ziloo-firmware/actions).
+
+
+    sudo curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
+    sudo chmod a+x /usr/local/bin/repo
+
+    
     
     
 ### Direct ssh like github runners docker

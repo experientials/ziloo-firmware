@@ -1,7 +1,0 @@
-huffman
-
-# For building i.MX SDK and Zephyr
-west
-
-# For uploading artifacts
-awscli
