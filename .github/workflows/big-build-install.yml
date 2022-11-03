@@ -16,7 +16,8 @@ jobs:
             run: |
               sudo curl https://storage.googleapis.com/git-repo-downloads/repo -o /usr/local/bin/repo
               sudo chmod a+x /usr/local/bin/repo
-              sudo DEBIAN_FRONTEND=noninteractive apt install -y < .github/workflows/pkglist
+              sudo apt update
+              sudo apt install -y $(cat .github/workflows/pkglist)
               pip3 install -r etc/requirements-ci.txt
 
             

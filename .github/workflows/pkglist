@@ -1,23 +1,49 @@
-binutils bash gzip bzip2 tar lzop cpio python python-dev zip unzip file bc chrpath screen \
-u-boot-tools device-tree-compiler socat time tcl gawk sed wget curl \
-autoconf libtool automake coreutils less diffstat texinfo \
-lz4 xz-utils fakeroot gnupg git-core tree git-lfs \
-mtools libyaml-dev libxml2-utils libudev-dev libusb-1.0-0-dev \
-net-tools asciidoc rsync openssh-client debianutils iputils-ping \
-perl ruby \
-python3 python3-dev python3-pip \
-python3-markdown python3-pip \
-python3-pexpect \
-python3-distutils python3-setuptools \
-python3-git python3-jinja2 python3-subunit \
-binfmt-support binfmt-support genext2fs \
-debootstrap \
-dosfstools fdisk gdisk kpartx parted squashfs-tools u-boot-tools \
-xxd \
-xmlto help2man groff libreoffice-writer fop dblatex texi2html docbook-utils parprouted nfs-kernel-server \ 
-libegl1-mesa libsdl1.2-dev libudev-dev libusb-1.0-0-dev pylint3 xterm locales apt-utils vim screen bash-completion mesa-common-dev zstd liblz4-tool zstd \
-language-pack-en m4 bison flex fakeroot libparse-yapp-perl python-pysqlite2 \
-build-essential gcc gcc-multilib g++ make cmake intltool pkg-config patch patchutils m4 bison flex tcl lzop texinfo ca-certificates
-
+binutils bash gzip bzip2 tar lzop 
+cpio 
+python python-dev 
+zip unzip file bc 
+chrpath screen
+u-boot-tools 
+device-tree-compiler 
+socat time tcl gawk sed wget curl
+autoconf libtool 
+automake coreutils less diffstat texinfo
+lz4 xz-utils 
+fakeroot gnupg git-core tree git-lfs
+mtools 
+libyaml-dev libxml2-utils libudev-dev libusb-1.0-0-dev
+net-tools asciidoc rsync 
+openssh-client debianutils iputils-ping
+perl ruby
+python3 
+python3-dev 
+python3-pip
+python3-markdown 
+python3-pip
+python3-pexpect
+python3-distutils 
+python3-setuptools
+python3-git 
+python3-jinja2 
+python3-subunit
+binfmt-support binfmt-support genext2fs
+debootstrap
+dosfstools fdisk gdisk kpartx 
+parted squashfs-tools u-boot-tools
+xxd
+xmlto help2man groff libreoffice-writer 
+fop dblatex texi2html docbook-utils 
+parprouted nfs-kernel-server
+libegl1-mesa libsdl1.2-dev libudev-dev libusb-1.0-0-dev pylint3 
+xterm locales apt-utils vim 
+screen bash-completion mesa-common-dev zstd 
+liblz4-tool
+language-pack-en m4 bison flex 
+fakeroot libparse-yapp-perl python-pysqlite2
+build-essential gcc gcc-multilib g++ 
+make cmake intltool pkg-config 
+patch patchutils 
+m4 bison flex tcl lzop 
+texinfo ca-certificates
 
 
