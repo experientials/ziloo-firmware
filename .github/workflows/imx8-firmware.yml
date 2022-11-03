@@ -9,7 +9,7 @@ on:
             - 'device/*'
 jobs:
     ucm-imx8-build:
-        runs-on: [big-build]
+        runs-on: [Friedheim]
         name: i.MX8 build running in Linode
         env:
           MACHINE: ucm-imx8m-plus
@@ -44,6 +44,9 @@ jobs:
                 rm ~/yocto-tmp-deploy/*.bz
                 tar cvfj tmp/deploy/ucm-imx8m-plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
                 tar cvfj tmp/deploy/ucm-imx8m-plus.dtb.tar.bz tmp/deploy/images/ucm-imx8m-plus/*.dtb
+                cd tmp/work/ucm_imx8m_plus-poky-linux/imx-image-core/1.0-r0/
+                tar cfj ~/yocto-tmp-deploy/ucm-imx8m-plus.rootfs.tar.bz rootfs/
+                cd ../../../../..
             - uses: actions/upload-artifact@v2
               with:
                 name: Image

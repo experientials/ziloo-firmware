@@ -1,0 +1,22 @@
+name: Install Big Build Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  big-build-install:
+      runs-on: [Friedheim]
+      name: Install Build Packages
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      steps:
+          - name: Check out Git repository
+            uses: actions/checkout@v2
+          - name: Install repo and packages
+            run: |
+              sudo curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
+              sudo chmod a+x /usr/local/bin/repo
+              sudo DEBIAN_FRONTEND=noninteractive apt install -y < .github/workflows/pkglist
+              pip3 install -r etc/requirements-ci.txt
+
+            
