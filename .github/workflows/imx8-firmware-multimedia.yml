@@ -1,0 +1,118 @@
+name: i.MX8 Firmware Build Runner
+
+on:
+    push:
+        branches: [ builder/home ]
+        paths:
+            - '.github/workflows/imx8-firmware-multimedia.yml'
+            - 'device/imx8/**/*'
+            - 'device/*'
+jobs:
+    ucm-imx8-build:
+        runs-on: [Friedheim]
+        name: i.MX8 build running in Linode
+        env:
+          MACHINE: ucm-imx8m-plus
+          IMX_RELEASE: imx-5.15.5-1.0.0
+          DISTRO: fsl-imx-xwayland
+          IMAGES: imx-image-multimedia
+          # IMAGES: imx-image-core
+          BRANCH: imx-linux-honister
+        steps:
+            - uses: actions/checkout@v2
+            - name: Setup sources and scripts
+              run: |
+                # ./scripts/sstate-cache-management.sh --remove-duplicated -d --cache-dir=<path to sstate-cached>
+                git config --global user.email "henrik@thepia.com"
+                git config --global user.name "Henrik Vendelbo"
+                repo init -u https://github.com/experientials/ziloo-firmware -b ${BRANCH} -m ${IMX_RELEASE}_experientials.xml
+                mkdir -p ~/yocto-downloads
+                ln -s ~/yocto-downloads downloads
+                repo sync -j`nproc`
+            - name: bitbake
+              run: |
+                . etc/setup-bitbake -b build-${MACHINE}
+                mkdir -p ~/yocto-sstate-cache
+                ln -s ~/yocto-sstate-cache sstate-cache
+                mkdir -p ~/yocto-tmp-deploy
+                rm -Rf ~/yocto-tmp-deploy/deb
+                rm -Rf ~/yocto-tmp-deploy/images
+                rm -Rf ~/yocto-tmp-deploy/licenses
+                mkdir -p tmp
+                ln -s ~/yocto-tmp-deploy tmp/deploy
+                bitbake -k ${IMAGES}
+                rm ~/yocto-tmp-deploy/*.bz
+                tar cvfj tmp/deploy/ucm-imx8m-plus.deb.tar.bz tmp/deploy/deb/ucm_imx8m_plus/
+                tar cvfj tmp/deploy/ucm-imx8m-plus.dtb.tar.bz tmp/deploy/images/ucm-imx8m-plus/*.dtb
+            - uses: actions/upload-artifact@v2
+              with:
+                name: Image
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/Image
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core-ucm-imx8m-plus.tar.bz2
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.tar.bz2
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core-ucm-imx8m-plus.wic.bz2
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.wic.bz2
+            - uses: actions/upload-artifact@v2
+              with:
+                name: modules-ucm-imx8m-plus.tgz
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/modules-ucm-imx8m-plus.tgz
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot-spl.bin
+                path: build-ucm-imx8m-plus/tmp/deploy/images/ucm-imx8m-plus/u-boot-spl.bin
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot-spl.bin-sd
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-spl.bin-sd
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot.bin
+                path:  ~/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot.bin
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot.bin-sd
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot.bin-sd
+            - uses: actions/upload-artifact@v2
+              with:
+                name: u-boot-compulab-initial-env-sd
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-compulab-initial-env-sd 
+            - uses: actions/upload-artifact@v2
+              with:
+                name: ucm-imx8m-plus.deb.tar.bz
+                path: ~/yocto-tmp-deploy/ucm-imx8m-plus.deb.tar.bz
+            - uses: actions/upload-artifact@v2
+              with:
+                name: ucm-imx8m-plus.dtb.tar.bz
+                path: ~/yocto-tmp-deploy/ucm-imx8m-plus.dtb.tar.bz
+            - uses: actions/upload-artifact@v2
+              with:
+                name: tee.bin
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/tee.bin
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx8mp_m7_TCM_hello_world.bin
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_hello_world.bin            
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin                            
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx8mp_m7_TCM_sai_low_power_audio.bin
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_sai_low_power_audio.bin            
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin                
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core.env
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core.env
+            - uses: actions/upload-artifact@v2
+              with:
+                name: imx-image-core-ucm-imx8m-plus.testdata.json
+                path: ~/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.testdata.json                                
