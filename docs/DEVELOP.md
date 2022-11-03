@@ -102,6 +102,61 @@ Manually setting up the route didn't seem to work. Resetting `/etc` with `sudo g
 Perhaps the bridge option should be used.
 
 
+## NFC boot for U-Boot
+
+- [See Compulab NFS/TFTP how-to](https://www.mediawiki.compulab.com/w/index.php?title=CL-SOM-iMX7:_Linux:_Manual_Installation:_Source:_Network)
+- [See Raspberry Pi TFTP install](https://pbxbook.com/voip/pi-tftp.html)
+
+
+Power up the Juno board and interrupt U-Boot's default boot selection to enter LUSH:
+
+```
+The default boot selection will start in   3 seconds
+```
+
+Save your host PC's IP address to the 'serverip', 'ipaddr', 'nfsroot' environment variables:
+
+```
+=> setenv ipaddr 192.168.1.211
+=> setenv serverip 192.168.1.126
+=> setenv nfsroot rootfs
+=> setenv ramdisk_addr 0x42000000
+=> saveenv
+```
+
+Next issue boot commands:
+
+```
+=> tftpboot ${loadaddr} kernel.img && tftpboot ${fdtaddr} ${fdtfile}
+=> booti ${loadaddr} ${fdtaddr}
+```
+
+Interesting [article that adds a ram disk with image for CL-SOM-iMX7](https://www.mediawiki.compulab.com/w/index.php?title=CL-SOM-iMX7:_Linux:_Manual_Installation:_Source:_Network).
+
+
+Command to boot `nfs`
+
+After restarting the nfs services, you can view the exported directory list(/tftpboot) by the following command,
+
+```
+showmount -e
+```
+
+Test fetching files by
+
+```
+tftp -v 192.168.1.101 -c get sample.txt
+```
+
+Addresses
+
+- splashimage 0x50000000
+- loadaddr 0x40480000
+- initrd_addr 0x43800000
+- fdt_addr 0x43000000
+- ramdisk_addr 0x42000000
+
+
 ## SD Card Format
 
 For development and debugging use an SD Card or USB stick. It must be partitioned,

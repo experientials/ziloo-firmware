@@ -7,11 +7,19 @@ hostname -i
 
 sudo apt install gparted etckeeper minicom code
 
+sudo locale-gen en_GB.UTF-8 UTF-8
+sudo update-locale en_GB.UTF-8 UTF-8
+export LANGUAGE=en_GB.UTF-8
+export LC_ALL=en_GB.UTF-8
+
+sudo apt install tex-common
+sudo dpkg --configure tex-common
+
 # Docs generation support
 sudo apt install xmlto help2man groff libreoffice-writer vim bash-completion fop dblatex texi2html docbook-utils asciidoc xmlto help2man groff  
 
 # Networking support
-sudo apt install dnsmasq u-boot-tools tftp tftpd sshpass ssh-askpass socat
+sudo apt install dnsmasq u-boot-tools tftpd-hpa tftp sshpass ssh-askpass socat parprouted dhcp-helper nfs-kernel-server rpcbind
 
 # Disk Image building
 sudo apt install mtools parted binfmt-support debootstrap dosfstools fdisk gdisk kpartx xxd squashfs-tools u-boot-tools genext2fs xz-utils lz4 liblz4-tool 
@@ -40,3 +48,6 @@ sudo git remote add origin git@github.com:experientials/ziloo-firmware.git
 sudo git push --set-upstream origin hw/builder
 cd /etc
 sudo git status
+
+# NFS
+

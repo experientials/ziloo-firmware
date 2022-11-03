@@ -6,6 +6,8 @@ The RPi can be accessed via
 
 > ssh pi@ziloo-test
 
+The RPi can be reached with VNC Viewer connected to `ziloo-test`.
+
 The ziloo-firmware repository can be synced with the RPi by adding it as origin.
 
 > git remote add ziloo-test pi@ziloo-test:~
@@ -110,8 +112,26 @@ sudo ./svc.sh start
 The `/etc` settings can be set up by `builder/etc` branch application.
 
 > cd ~
-> sudo source etc/setup-rpi-bridge.sh
+> sudo bash etc/setup-rpi-bridge.sh
 > sudo reboot
+
+
+### TFTP server
+
+Restarting service after config changes
+
+> service tftpd-hpa restart
+
+Checking if the service is started on boot
+
+> systemctl is-enabled tftpd-hpa
+
+Testing the access to files via [tftp](https://www.linux.com/topic/networking/trivial-transfers-tftp-part-3-usage/)
+
+```
+pi@ziloo-test$ tftp 192.168.1.126
+tftp> get test.txt
+```
 
 
 ### Packages to install
