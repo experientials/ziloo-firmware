@@ -12,4 +12,7 @@ services:
     - ./dist:/workspace/dist
     - ./device/imx8:/workspace/device/imx8
     - ./mcuxsdk:/workspace/mcuxsdk
+    - ./downloads:/workspace/downloads
+    - ./cache:/workspace/cache
     - ./sstate-cache:/workspace/sstate-cache
+    

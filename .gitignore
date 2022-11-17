@@ -83,5 +83,13 @@ user.props
 .repo/
 mcuxsdk/
 sources/
+downloads/
+cache/
 sstate-cache/
-
+setup-environment
+README-IMXBSP
+README-DESKTOP
+README
+imx-setup-release.sh
+imx-setup-desktop.sh
+compulab-setup-env

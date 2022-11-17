@@ -49,6 +49,8 @@ docker exec --user build ziloo-builder-user sh -c 'echo do it!'
 ### Setup big-build
 
     sudo apt install docker docker-compose
+    sudo snap remove git-repo
+    sudo apt install repo
 
 
 ### Setup Raspberry Pi Actions runner
