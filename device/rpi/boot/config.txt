@@ -71,7 +71,10 @@ disable_overscan=1
 # (e.g. for USB device mode) or if USB support is not required.
 otg_mode=1
 
-[all]
+[pi0]
+dtoverlay=g_cdc
+otg_mode=1
+
 
 [pi4]
 # Run as fast as firmware / board allows
