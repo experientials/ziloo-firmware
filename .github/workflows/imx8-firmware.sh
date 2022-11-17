@@ -1,6 +1,5 @@
-DOCKER_IMAGE_TAG="ziloo/image-builder-user:test"
+DOCKER_IMAGE_TAG="ziloo/image-builder-user:latest"
 
-# docker container run -d image-builder-user \
 docker container run -it --rm \
     --platform linux/amd64 \
     --volume `pwd`/etc:/workspace/etc \
@@ -13,8 +12,7 @@ docker container run -it --rm \
     --volume `pwd`/sstate-cache:/workspace/sstate-cache \
     --entrypoint /bin/bash \
     "${DOCKER_IMAGE_TAG}" \
-
-    # source ./etc/bitbake-with-setup -k ${IMAGES} -b build-${MACHINE}
+    source ./etc/bitbake-with-setup -k ${IMAGES} -b build-${MACHINE}
 
 # To experiment with this you can rebuild image locally with
 # docker buildx build --platform linux/amd64 -t ziloo/image-builder-user:test .
