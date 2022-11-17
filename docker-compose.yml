@@ -1,8 +1,8 @@
 version: '3'
 services:
   ziloo-builder:
-    container_name: ziloo-builder
-    image: ziloo/image-builder
+    container_name: ziloo-builder-user
+    image: ziloo/image-builder-user
     platform: "linux/amd64"
     stdin_open: true # docker run -i
     tty: true        # docker run -t

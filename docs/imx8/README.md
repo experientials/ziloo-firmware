@@ -8,6 +8,8 @@ This is concerned with getting up and running on two carrier boards and later on
 - [NXP Embedded Linux Releases](https://www.nxp.com/design/software/embedded-software/i-mx-software/embedded-linux-for-i-mx-applications-processors:IMXLINUX?)
 - [NXP i.MX Repo Manifest](https://github.com/nxp-imx/imx-manifest/blob/imx-linux-kirkstone/)
 - [Building i.MX BSP in Docker](https://github.com/nxp-imx/imx-docker)
+- [Build NXP Desktop Linux for the i.MX 8MPlus using Yocto](https://www.hackster.io/flint-weller/build-nxp-desktop-linux-for-the-i-mx-8mplus-using-yocto-438922)
+- [Docker Builds are slow on M1](https://blog.driftingruby.com/docker-builds/)
 
 Source code and build scripts are found under [device/imx8](./device/imx8/README.md)
 
@@ -15,6 +17,16 @@ Source code and build scripts are found under [device/imx8](./device/imx8/README
 
 
 ![I-Pi_SMARC-IMX8M-PLUS](./I-Pi_SMARC-IMX8M-PLUS-Float_cbe8788c-a020-40f6-91d7-7b350d4ba85c.png)
+
+
+## i.MX8 build
+
+```bash
+repo init -u https://github.com/experientials/ziloo-firmware -b imx-linux-honister -m imx-5.15.5-1.0.0_desktop.xml
+repo sync
+EULA=1 DISTRO=imx-desktop-xwayland MACHINE=imx8mpevk source imx-setup-desktop.sh -b bld-imx8mpevk-desktop
+```
+
 
 ## I-Pi_SMARC-IMX8M-PLUS Build
 

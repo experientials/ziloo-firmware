@@ -46,6 +46,10 @@ docker exec --user build ziloo-builder-user sh -c 'echo do it!'
 
 - [Docker images and files chown](https://blog.mornati.net/docker-images-and-files-chown)
 
+### Setup big-build
+
+    sudo apt install docker docker-compose
+
 
 ### Setup Raspberry Pi Actions runner
 
