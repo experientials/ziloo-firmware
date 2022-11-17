@@ -1,0 +1,12 @@
+#!/bin/sh
+. etc/inside-docker
+
+# trailing param, build dir
+BD=$(cat <<< $@ | awk '$0=$NF')
+
+. etc/setup-bitbake -b ${BD}
+bitbake $1 $2
+
+
+# Test call
+# IMAGES=imx-image-core MACHINE=ucm-imx8m-plus source etc/bitbake-with-setup -k imx-image-core -b build-ucm-imx8m-plus

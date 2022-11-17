@@ -102,6 +102,41 @@ Manually setting up the route didn't seem to work. Resetting `/etc` with `sudo g
 Perhaps the bridge option should be used.
 
 
+### Build variations
+
+Machine | Environment |
+--- | --- |
+`ucm-imx8m-mini` | `export MACHINE=ucm-imx8m-mini LREPO=compulab-bsp-setup-imx8mm.xml`
+`iot-gate-imx8`  | `export MACHINE=iot-gate-imx8 LREPO=compulab-bsp-setup-iot.xml`
+`ucm-imx8m-plus` | `export MACHINE=ucm-imx8m-plus LREPO=compulab-bsp-setup-imx8mp.xml`
+`iot-gate-imx8plus` | `export MACHINE=iot-gate-imx8plus	 LREPO=compulab-bsp-setup-imx8mp.xml`
+
+
+Distro | Setup command  | Build command |
+--- | --- | --- |
+fslc-xwayland | DISTRO=fslc-xwayland source compulab-setup-environment build-fslc-${MACHINE} | ```bitbake -k fsl-image-multimedia-full```
+fslc-framebuffer | DISTRO=fslc-framebuffer source compulab-setup-environment build-fslc-${MACHINE} | ```bitbake -k fsl-image-network-full-cmdline```
+fsl-imx-<backend> | DISTRO=fsl-imx-<backend> source setup-bitbake -b build-${MACHINE} |
+
+
+For more see [meta-imx](https://github.com/nxp-imx/meta-imx)
+
+
+DISTROs are new and the way to configure for any backends.  Use DISTRO= instead of the -e on the setup script.
+The -e parameter gets converted to the appropriate distro configuration.
+
+Note: 
+DirectFB is no longer supported in i.MX graphic builds.
+The X11 and Framebuffer distros are only supported for i.MX 6 and i.MX 7.  i.MX 8 should use xwayland only.
+XWayland is the default distro for all i.MX families.
+
+- fls-image-machine-test
+- fsl-image-mfgtool-initramfs: Seems to support uuu instead of mfgtool
+- imx-image-core: Minimal image
+- imx-image-multimedia: This image contains all the packages except QT6/OpenCV/Machine Learning packages.
+- imx-image-full: This is the big image which includes imx-image-multimedia + OpenCV + QT6 + Machine Learning packages.
+
+
 ## SD Card Format
 
 For development and debugging use an SD Card or USB stick. It must be partitioned,
