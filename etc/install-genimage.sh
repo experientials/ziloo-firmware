@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # download and create genimage by nagel
 

@@ -19,13 +19,6 @@ To run from a developer machine refer to the specific hardware branch for the sp
 - [In yocto (poky) why is the layers config in the build/ folder?](https://stackoverflow.com/questions/45864903/in-yocto-poky-why-is-the-layers-config-in-the-build-folder)
 
 
-### Setup big-build
-
-    sudo apt install docker docker-compose
-    sudo snap remove git-remove
-    sudo curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
-    sudo chmod a+x /usr/local/bin/repo
-
 ### Direct ssh like github runners docker
 
 Starting docker container
@@ -46,11 +39,15 @@ docker exec --user build ziloo-builder-user sh -c 'echo do it!'
 
 - [Docker images and files chown](https://blog.mornati.net/docker-images-and-files-chown)
 
+
 ### Setup big-build
 
     sudo apt install docker docker-compose
-    sudo snap remove git-repo
-    sudo apt install repo
+    sudo snap remove git-remove
+    sudo curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
+    sudo chmod a+x /usr/local/bin/repo
+
+
 
 
 ### Setup Raspberry Pi Actions runner

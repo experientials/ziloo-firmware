@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # dockerfile-install-dotfiles.sh
 # PURPOSE : Use when starting a Docker container for the first time
 #           Installs my dotfiles and configures git
