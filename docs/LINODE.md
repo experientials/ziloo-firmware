@@ -1,6 +1,6 @@
 # ziloo-builder-eu-central
 
-This is an x86 Ubuntu 20.04LTS server hosted on Linode. It has 16GB RAM and 320GB SSD.
+This is an x86 Ubuntu 20.04LTS server hosted on Linode. It has 32GB RAM and 630GB SSD.
 
 * IP 172.105.246.8 2a01:7e01::f03c:92ff:fec3:48bb
 
@@ -19,7 +19,19 @@ Resulting build should end up on a branch prefixed with `hw/`
 * `hw/rp2`
 * `hw/nrf`
 
-P.S. Please don't commit directly to branches main/builder. If need be create new branches to play with. We then merge your branch when all is working
+P.S. Please don't commit directly to branches main/builder. If need be, create new branches to play with. We then merge your branch when all is working
+
+Yocto bitbake downloads and creates a large amount of state. This is currently created within the `ziloo-firmware` directory. This might be changed to be placed in dedicated directories under `/var/cache` to maintain them long term and allow mapping as external nfs volumes.
+
+
+## Node requirement
+
+```
+DEBIAN_FRONTEND=noninteractive apt install -y gawk wget git-core tree git-lfs diffstat unzip texinfo \
+    gcc-multilib build-essential chrpath socat cpio python python3 \
+    python3-pip python3-pexpect xz-utils debianutils iputils-ping \
+    libsdl1.2-dev xterm tar locales net-tools rsync sudo vim curl
+```
 
 
 ## Connecting via SSH
@@ -34,6 +46,41 @@ To gain access please provide me with a SSH public key that I can add.
 
 To copy the build output
 > scp root@172.105.246.8:~/imx-yocto-bsp/build/tmp/deploy/images/lec-imx8mp/imx-image-full-lec-imx8mp.tar.bz2 .
+
+```sh
+mkdir -p ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/Image ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.tar.bz2 ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.wic.bz2 ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/modules-ucm-imx8m-plus.tgz ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-spl.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-spl.bin-sd ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot.bin-sd ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/tee.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core.env ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-compulab-initial-env-sd ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/signed_dp_imx8m.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/signed_hdmi_imx8m.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_hello_world.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_sai_low_power_audio.bin ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.manifest ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.testdata.json ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-hdmi.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-ldo4.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-lvds.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-mipi.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-nopcie.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-p21.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-rpmsg.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-thermal.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-usart1.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-usbdev.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus_mipi-csi1.dtb ./images
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus_mipi-csi2.dtb ./images
+```
 
 
 ## Setup Linode with correct keys
@@ -96,33 +143,3 @@ Steps in script(as it seems to me):
 5) Upon completion flag the build as completed/failed 
 
 
-Download
-
-```
-# Create a folder
-$ mkdir actions-runner && cd actions-runner
-# Download the latest runner package
-$ curl -o actions-runner-linux-x64-2.283.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.283.1/actions-runner-linux-x64-2.283.1.tar.gz
-# Optional: Validate the hash
-$ echo "aebaaf7c00f467584b921f432f9f9fb50abf06e1b6b226545fbcbdaa65ed3031  actions-runner-linux-x64-2.283.1.tar.gz" | shasum -a 256 -c
-# Extract the installer
-$ tar xzf ./actions-runner-linux-x64-2.283.1.tar.gz
-```
-
-Configure
-
-```
-# Create the runner and start the configuration experience
-$ ./config.sh --url https://github.com/experientials/ziloo-firmware --token AAARXPURQOP2UPGXPACBBYLBM47XC
-# Last step, run it!
-$ ./run.sh
-```
-
-Using your self-hosted runner
-
-```
-# Use this YAML in your workflow file for each job
-runs-on: self-hosted
-```
-
-For additional details about configuring, running, or shutting down the runner, please check out our product docs.

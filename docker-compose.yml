@@ -13,6 +13,6 @@ services:
     - ./device/imx8:/workspace/device/imx8
     - ./mcuxsdk:/workspace/mcuxsdk
     - ./downloads:/workspace/downloads
-    - ./cache:/workspace/cache
-    - ./sstate-cache:/workspace/sstate-cache
+    - ./cache:/workspace/build-ucm-imx8m-plus/cache
+    - ./sstate-cache:/workspace/build-ucm-imx8m-plus/sstate-cache
     

@@ -1,6 +1,7 @@
 # i.MX8 Plus firmware
 
-The github actions will build the firmware based on pushes to `hw/imx8`.
+The github actions will build the full firmware based on pushes to `main`.
+The branch `hw/imx8` is meant for speculative changes and more temporary builds.
 
 * The `.github/workflows/imx8-firmware.yml` action
 * Attempt to build the iMX firmware. If successful artifacts will be uploaded.
@@ -24,6 +25,37 @@ Compute Engine Structure on i.MX 8M
 * `imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin`
 * `u-boot.bin` (`u-boot-sd-2020.04-r0.bin`)
 
+On boot partition (`fatls mmc 2`)
+
+* `tee.bin`
+* `ucm-imx8-plus.dtb`
+* `ucm-imx8m-plus_mipi-csi1.dtb`
+* `ucm-imx8m-plus_mipi-csi2.dtb`
+
+Candidates for boot partition
+
+* `ucm-imx8m-plus-rpmsg.dtb`
+* `ucm-imx8m-plus-hdmi.dtb`
+
+TCM demo pages.
+
+* meta-imx /  meta-bsp / recipes-fsl / mcore-demos / imx-m7-demos_2.11.0.bb
+
+The sources are downloaded, but the URL is unclear.
+
+
+### Device tree
+
+Device tree binary files can be extracted using `pip install extract-dtb`.
+
+Available Device Tree options listed in [Yocto Linux: How-To Guide](https://mediawiki.compulab.com/w/index.php?title=UCM-iMX8M-Plus:_Yocto_Linux:_How-To_Guide).
+Note that the variable name should be `fdt_file`, so the command for enabling OTG is `setenv fdt_file ucm-imx8m-plus-usbdev.dtb; saveenv;`.
+
+
+### U-Boot over Network
+
+- [U-Boot example commands](https://docs.embeddedts.com/U-boot_commands)
+
 
 ## Open Tasks
 
@@ -40,8 +72,12 @@ Compute Engine Structure on i.MX 8M
 * Latest tensorflow-lite (doc refers to 2.5.0)
 * GPU/NPU enabled
 * Working NXP demos
-* Add kernel support for F2FS and squashfs
+* Add kernel support for [F2FS](https://en.wikipedia.org/wiki/F2FS), [UBIFS](https://en.wikipedia.org/wiki/UBIFS) and squashfs
 * Add driver support for OV2735
+* Audio monitoring by Cortex M [Low Power Voice Control Solution](../m7/Audio-AN13201.pdf) - [SAI Low Power Audio](https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Running-the-SAI-Low-Power-Audio-Example-using-GStreamer-Using/ta-p/1486458) - [AN implement Low Power Audio](https://www.nxp.com/docs/en/application-note/AN12195.pdf)
+* Booting from USB stick. [Microchip notes](https://microchipsupport.force.com/s/article/How-to-use-USB-stick-to-update-kernel-and-rootfs-based-on-u-boot) - 
+* [Add Package Manager](https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Yocto-Project-Package-Management-smart/ta-p/1106337)
+
 
 Docker compose config example [workflow](https://github.com/peter-evans/docker-compose-actions-workflow)
 

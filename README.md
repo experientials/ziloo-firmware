@@ -2,15 +2,22 @@
 
 Ziloo is an independent device that sees and senses the environment. It recognises objects and behavior based on what it has been taught. It outputs an event log describing what is perceived.
 
-The firmware is made for the various processors contained. 
+The firmware is made with Yocto and targeted at i.MX8 platforms. 
+As an autonomous computing device some features are desired long term:
 
-Key building blocks are:
+- Log based storage (potentially [F2FS](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html) storage (requires Linux Kernel 5.7))
+- muslc static library compilation for modularity
+- busybox or toybox shell to save space
+- Tiny Kernel
+- Kernel modules(like Raspbian) for flexibility and upgrading
+- Base toolsuite installed by mounting read-only SquashFS images
 
-- Log based storage
-- muslc static library
-- busybox shell
-- Base Firmware from read-only squashfs
-- [F2FS](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html) storage (requires Linux Kernel 5.7)
+Boot options are:
+
+- Default to Linux kernel & device tree from Boot partition
+- U-Boot Mass Storage, Ethernet and Serial Gadget over USB OTG connector
+- Boot from USB Stick or SD Card
+- SDP boot over USB OTG connector using the UUU tool
 
 
 For more information see,
@@ -20,7 +27,8 @@ For more information see,
 - [image-builder-user docker image](https://hub.docker.com/repository/docker/ziloo/image-builder-user)
 - [SD Card Format](./docs/DEVELOP.md#SD_Card_Format)
 - [Building with Docker](./docs/DEVELOP.md#Docker)
-- [i.MX8 Yocto Docs](./docs/imx8/README.md)
+- [Hardware Support](./docs/imx8/HARDWARE-SUPPORT.md)
+- [i.MX8 Yocto Docs](./docs/imx8/README.md) - [device](./device/imx8/README.md) - [device support](./device/imx8/SUPPORT.md)
 - [Built with GitHub Actions](https://github.com/features/actions)
 
 

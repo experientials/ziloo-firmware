@@ -1,46 +1,4 @@
-# Setting up Development environment
-
-Fork the main branch if you are making general improvements.
-And make a PR to merge them on to the main branch as well as the relevant hardware(`hw/*`) branches.
-
-Fork a hardware(`hw/*`) branch, if you work on a firmware release for a specific platform.
-If possible you should fork the main branch for work on firmware work and later cherry pick the 
-merge onto the relevant hardware branches.
-Hardware branches have to be kept compatible(rebased) with main branch, but can diverge from it.
-Hardware branches currently do not allow force push to ensure no history is lost.
-In future setups there may be release branches that hold the qualified hardware branches which
-have passed tests and been rebased on main at the time, thereby capturing the long term history.
-
-- [Setup for i.MX8 Programming](./imx8/README.md)
-- [i.MX8 Development](./imx8/DEVELOP.md)
-
-
-## Required Software for Local Development
-
-VS Code extensions
-
-* Docker
-* Python
-* CMake & CMake Tools
-* Docker Explorer
-* Cortex-Debug
-* Remote - Containers
-* Jupyter
-* Better TOML
-
-The default setup on the native dev machine assumes
-
-- Python 3.9 (Comes with miniforge)
-- Miniforge3 `brew install miniforge`
-- [Android Repo tool](https://android.googlesource.com/tools/repo) `snap install repo-tool` / `apt install repo` / `brew install repo`
-- Zephyr Project - west (`pip3 install west`)
-
-This allows compatibility with ML toolchains.
-
-## macOS fixup
-
-> brew install qemu libvirt terraform picocom
-> brew upgrade git cmake go terraform qemu repo picocom ninja 
+# i.MX8 Development
 
 
 ## Building Full Firmware
@@ -99,15 +57,6 @@ You can build a docker image locally by,
 To push result image into registry use --push or to load image into docker use --load 
 
 
-## Raspberry Pi features
-
-- [Etckeeper](http://etckeeper.branchable.com)
-- [Wifi to ethernet routing](https://www.instructables.com/Share-WiFi-With-Ethernet-Port-on-a-Raspberry-Pi/) - [Script to run](https://github.com/arpitjindal97/raspbian-recipes/blob/master/wifi-to-eth-route.sh)
-
-Manually setting up the route didn't seem to work. Resetting `/etc` with `sudo git reset NNN` worked wonders.
-Perhaps the bridge option should be used.
-
-
 ### Build variations
 
 Machine | Environment |
@@ -143,25 +92,49 @@ XWayland is the default distro for all i.MX families.
 - imx-image-full: This is the big image which includes imx-image-multimedia + OpenCV + QT6 + Machine Learning packages.
 
 
-## SD Card Format
+### Configuring u-boot
+
+From the ziloo-firmware directory
+
+> source etc/setup-bitbake -b build-ucm-imx8m-plus
+> bitbake u-boot -c devshell
+> cd ../build/ucm-imx8m-plus_defconfig/
+> make menuconfig
+
+See porting guide [Linux Documentation](./imx8/IMX_LINUX_USERS_GUIDE.pdf) ([How to get to menuconfig for u-boot in Yocto environment](https://stackoverflow.com/questions/43211384/how-to-get-to-menuconfig-for-u-boot-in-yocto-environment), [U-Boot customization using devshell](https://community.nxp.com/t5/i-MX-Processors/U-Boot-customization-using-devshell/m-p/1000673))
+
+Device drivers
+
+- USB controller number 0 (Should it be changed for Host USB instead of OTG?)
+- U-Boot ethernet over USB (CONFIG_USB_HOST_ETHER) - [Post]() - [README.usb](https://github.com/lentinj/u-boot/blob/master/doc/README.usb) 
+- Network device support. MII enabled, RGMII enable? 
+- 1-wire controllers support?
+- USB Support. Driver model Gadget? Driver model Gadget in SPL? USB Keyboard support? 
+- USB Gadget Support. USB mass storage gadget? USB Ethernet Gadget with CDC-EMC?  [U-Boot USB Mass Storage gadget](https://boundarydevices.com/u-boot-usb-mass-storage-gadget/)
+- File systems. ext4. FAT. SquashFS.
+
+It seems to support [MCS7830 USB to Ethernet hardware](https://ecsoft2.org/moschip-mcs7830-usb-20-ethernet-driver) 
+and [AX88179 usb 3.0 lan](https://oemdrivers.com/network-asix-ax88179-driver). There is a [AX88179 Driver for MacOS 11.5 update for macOS](https://developer.apple.com/forums/thread/685854).
+This should allow a TFTP server boot via USB/Ethernet.
+
+Guides
+
+- [Comfortable kernel workflow on Beagleboard XM with nfsroot](https://www.veterobot.org/2012/03/comfortable-kernel-workflow-on.html)
+- [Can USB-OTG be used for U-Boot and Linux consoles?](https://stackoverflow.com/questions/63104542/can-usb-otg-be-used-for-u-boot-and-linux-consoles)
+
+
+## USB Stick / SD Card Format
+
+The card or stick has two partitions the first FAT, the second Ext4.
+It is burned by using `imx-image-full-ucm-imx8m-plus.rootfs.wic` using balena Etcher or similar.
+The boot sector contains the linux kernel, TEE and device tree with 87MB capacity and 50MB available.
+
 
 For development and debugging use an SD Card or USB stick. It must be partitioned,
 
 - With MBR FAT32 (diskutil eraseDisk FAT32 ALPINE MBR $(DISK))
-- 1GB FAT32 boot partition
+- 1Gb FAT32 boot partition
 - 3.4Gb extFS 4 rootfs partition
 
 An empty SD Card image is generated with `make ziloo-raw-image`, which will generate `ziloo-dev-card.img.zip`.
 
-As u-boot is on the eMMC or Flash chip it should be possible to create a dual-booting RPi-Alpine/Raspbian/Yocto SD Card
-that can be used everywhere. This will be explored more.
-
-
-## Docker
-
-The build and testing is run primarily in Docker. The firmware can be tested with QEMU in a dedicated docker container. 
-Building the firmware also takes place in a Docker container. 
-Where possible all firmware will be built with the same docker container `ziloo/image-builder`.
-
-When working with Docker you disk can fill up quickly. It is a good idea to run `docker system prune` once finished on adjusting
-the build.

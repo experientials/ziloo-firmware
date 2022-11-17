@@ -15,6 +15,7 @@ This is concerned with getting up and running on two carrier boards and later on
 - [Docker Builds are slow on M1](https://blog.driftingruby.com/docker-builds/)
 - [This setup helps to build i.MX BSP in an isolated environment with docker](https://github.com/nxp-imx/imx-docker)
 
+Make sure to consider [Needed Hardware support](./HARDWARE-SUPPORT.md)
 Source code and build scripts are found under [device/imx8](./device/imx8/README.md)
 
 ![SB-UCM-iMX8PLUS](./SB-UCMIMX8PLUS-carrier-board.jpg)

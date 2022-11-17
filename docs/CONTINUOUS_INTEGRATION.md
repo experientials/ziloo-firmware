@@ -8,7 +8,8 @@ The actions are defined to trigger for the specific branch producing artifacts f
 Multiple runners are deployed to facilitate the different needs.
 Modify `runs-on` for the different actions depending on what you aim to do
 
-- `bigbuild` `Linode` is a 300GB build node hosted on Linode
+- `big-build` `Linode` is a 300GB build node hosted on Linode
+- `big-build` `Friedheim` is a 400GB build node privately hosted
 - `raspbian` is for Raspberry Pi directed testing of hardware
 - `macOS` `arm64` is for experimentation with Mac builds and App integration.
 
@@ -46,6 +47,39 @@ docker exec --user build ziloo-builder-user sh -c 'echo do it!'
     sudo snap remove git-remove
     sudo curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
     sudo chmod a+x /usr/local/bin/repo
+
+
+Download
+
+```
+# Create a folder
+$ mkdir actions-runner && cd actions-runner
+# Download the latest runner package
+$ curl -o actions-runner-linux-x64-2.283.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.283.1/actions-runner-linux-x64-2.283.1.tar.gz
+# Optional: Validate the hash
+$ echo "aebaaf7c00f467584b921f432f9f9fb50abf06e1b6b226545fbcbdaa65ed3031  actions-runner-linux-x64-2.283.1.tar.gz" | shasum -a 256 -c
+# Extract the installer
+$ tar xzf ./actions-runner-linux-x64-2.283.1.tar.gz
+```
+
+Configure
+
+```
+# Create the runner and start the configuration experience
+$ ./config.sh --url https://github.com/experientials/ziloo-firmware --token AAARXPURQOP2UPGXPACBBYLBM47XC
+# Last step, run it!
+$ sudo ./svc.sh install
+$ sudo ./svc.sh start
+```
+
+Using your self-hosted runner
+
+```
+# Use this YAML in your workflow file for each job
+runs-on: self-hosted
+```
+
+For additional details about configuring, running, or shutting down the runner, please check out our product docs.
 
 
 

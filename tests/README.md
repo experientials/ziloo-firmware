@@ -52,7 +52,7 @@ Boot partition (capacity 268.4 MB) will contain
 
 - firstrun.sh
 - config.txt
-- cmdline.txxt
+- cmdline.txt
 
 To be used for updates to Bob and Ziloo enough space
 must be present to hold
@@ -118,3 +118,10 @@ sudo git push --set-upstream origin builder/etc
 
 > minicom -b 115200 -o -D /dev/serial0
 
+The console on i.MX8 UART2 can be reached on ttyAMA0
+
+> minicom -b 115200 -D /dev/ttyAMA0
+
+The low power Cortex M7 console UART4 should be on ttyAMA2
+
+> minicom -b 115200 -D /dev/ttyAMA2

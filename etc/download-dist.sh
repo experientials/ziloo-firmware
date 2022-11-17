@@ -1,0 +1,39 @@
+#!/bin/sh
+mkdir -p ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/Image ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.tar.bz2 ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.wic.bz2 ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/modules-ucm-imx8m-plus.tgz ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-spl.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-spl.bin-sd ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot.bin-sd ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/tee.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core.env ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/u-boot-compulab-initial-env-sd ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/signed_dp_imx8m.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/signed_hdmi_imx8m.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_hello_world.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx8mp_m7_TCM_sai_low_power_audio.bin ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.manifest ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/imx-image-core-ucm-imx8m-plus.testdata.json ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-hdmi.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-ldo4.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-lvds.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-mipi.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-nopcie.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-p21.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-rpmsg.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-thermal.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-usart1.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus-usbdev.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus_mipi-csi1.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/images/ucm-imx8m-plus/ucm-imx8m-plus_mipi-csi2.dtb ./dist
+scp root@172.105.246.8:/home/github-runner-user/yocto-tmp-deploy/ucm-imx8m-plus.rootfs.tar.bz ./dist
+cd dist
+tar -xf ./imx-image-core-ucm-imx8m-plus.wic.bz2 
+tar zxf ./modules-ucm-imx8m-plus.tgz 
+tar -xf ./ucm-imx8m-plus.rootfs.tar.bz
+cd ..
