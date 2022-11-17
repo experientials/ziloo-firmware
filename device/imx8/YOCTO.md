@@ -62,6 +62,32 @@ Related sources for i.MX Docker builds and doku,
 - [iMX Working with Yocto](../../docs/imx8/iMX_Working_with_Yocto.pdf)
 - [i.MX Yocto Project User's Guide](../../docs/imx8/i.MX%20Yocto%20Project%20User's%20Guide%20IMXLXYOCTOUG.pdf)
 - [IMX LINUX USERS GUIDE](../../docs/imx8/IMX_LINUX_USERS_GUIDE.pdf)
+- [Balena yocto scripts for reference](https://github.com/balena-os/balena-yocto-scripts/tree/f33225d87feff1a4e9b95ca7704c9b7ec27d6d61)
+- [DART-MX8M - Customizing U-Boot](https://variwiki.com/index.php?title=Yocto_Customizing_U-Boot&release=RELEASE_SUMO_V2.0_DART-MX8M)
+
+
+### U-Boot / Fastboot
+
+The boot must provide a way to boot an image in RAM over USB. This should be possible with Fastboot support in U-Boot.
+It enables a PC running the Fastboot service to provide the Firmware for the device. When the device boots it loads the firmware OS via USB.
+It must also be possible to connect to the device via adb/Fastboot to update firmware installed on eMMC.
+
+Booting must proceed normally if on Fastboot server is connected on the USB 2.0 OTG.
+
+The partition layout should be something like:
+
+1) SPL
+2) BL31
+3) U-Boot / BL33
+4) Linux Kernel
+5) SquashFS / SYS Linux (/)
+6) F2FS User (/usr)
+
+The idea is that the base OS can be replaced on an irregular interval by overwriting it with a standard image, while the device specific
+software and data can be wiped or replaced by overwriting the user partition.
+
+At boot the device must also check if a partial firmware/data update is provided on the OTG connector and import it if present.
+
 
 
 ### Linux Configuration

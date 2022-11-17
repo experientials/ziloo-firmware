@@ -81,4 +81,69 @@ Edit the autostart file and append a new @lxterminal command
 @pcmanfm --desktop --profile LXDE-pi
 @xscreensaver -no-splash
 @lxterminal -e bash /home/pi/actions-runner/run.sh
+
+
+#### Notes: Build output
+
+~/imx-yocto-bsp/build/tmp/deploy/images/lec-imx8mp
+
+scp root@172.105.74.116/root/imx-yocto-bsp/build/tmp/deploy/images/lec-imx8mp/
+
+
+```sh
+root@localhost:~/imx-yocto-bsp/build/tmp/deploy/images/lec-imx8mp# ls
+Image
+Image--5.4-r0-lec-imx8mp-20220709083139.bin
+Image-lec-imx8mp.bin
+imx-boot
+imx-boot-lec-imx8mp-sd.bin-flash_evk
+imx-boot-tools
+imx-image-full-imx-imx-boot-bootpart.wks
+imx-image-full-lec-imx8mp-20220709124403.rootfs.manifest
+imx-image-full-lec-imx8mp-20220709124403.testdata.json
+imx-image-full-lec-imx8mp-20220710023103.rootfs.tar.bz2
+imx-image-full-lec-imx8mp-20220710023103.rootfs.wic.bmap
+imx-image-full-lec-imx8mp-20220710023103.rootfs.wic.bz2
+imx-image-full-lec-imx8mp.manifest
+imx-image-full-lec-imx8mp.tar.bz2
+imx-image-full-lec-imx8mp.testdata.json
+imx-image-full-lec-imx8mp.wic.bmap
+imx-image-full-lec-imx8mp.wic.bz2
+imx-image-full.env
+imx8mp_m7_TCM_hello_world.bin
+imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin
+imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin
+imx8mp_m7_TCM_sai_low_power_audio.bin
+lec-imx8mp--5.4-r0-lec-imx8mp-20220709083139.dtb
+lec-imx8mp-auoB101UAN01-mipi-panel--5.4-r0-lec-imx8mp-20220709083139.dtb
+lec-imx8mp-auoB101UAN01-mipi-panel-lec-imx8mp.dtb
+lec-imx8mp-auoB101UAN01-mipi-panel.dtb
+lec-imx8mp-hydis-hv150ux2--5.4-r0-lec-imx8mp-20220709083139.dtb
+lec-imx8mp-hydis-hv150ux2-lec-imx8mp.dtb
+lec-imx8mp-hydis-hv150ux2.dtb
+lec-imx8mp-lec-imx8mp.dtb
+lec-imx8mp-wifi--5.4-r0-lec-imx8mp-20220709083139.dtb
+lec-imx8mp-wifi-lec-imx8mp.dtb
+lec-imx8mp-wifi.dtb
+lec-imx8mp.dtb
+lpddr4_pmu_train_1d_dmem_202006.bin
+lpddr4_pmu_train_1d_imem_202006.bin
+lpddr4_pmu_train_2d_dmem_202006.bin
+lpddr4_pmu_train_2d_imem_202006.bin
+modules--5.4-r0-lec-imx8mp-20220709083139.tgz
+modules-lec-imx8mp.tgz
+signed_dp_imx8m.bin
+signed_hdmi_imx8m.bin
+tee.bin
+tee.mx8mpevk.bin
+u-boot-lec-imx8mp.bin
+u-boot-lec-imx8mp.bin-sd
+u-boot-sd-2020.04-r0.bin
+u-boot-spl.bin
+u-boot-spl.bin-lec-imx8mp
+u-boot-spl.bin-lec-imx8mp-2020.04-r0-sd-2020.04-r0
+u-boot-spl.bin-lec-imx8mp-sd
+u-boot-spl.bin-sd
+u-boot.bin
+u-boot.bin-sd
 ```
