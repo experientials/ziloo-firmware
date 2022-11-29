@@ -26,6 +26,7 @@ python3-setuptools
 python3-git 
 python3-jinja2 
 python3-subunit
+nodejs
 binfmt-support binfmt-support genext2fs
 debootstrap
 dosfstools fdisk gdisk kpartx 

@@ -28,7 +28,7 @@ Yocto bitbake downloads and creates a large amount of state. This is currently c
 
 ```
 DEBIAN_FRONTEND=noninteractive apt install -y gawk wget git-core tree git-lfs diffstat unzip texinfo \
-    gcc-multilib build-essential chrpath socat cpio python python3 \
+    gcc-multilib build-essential chrpath socat cpio python python3 nodejs \
     python3-pip python3-pexpect xz-utils debianutils iputils-ping \
     libsdl1.2-dev xterm tar locales net-tools rsync sudo vim curl
 ```

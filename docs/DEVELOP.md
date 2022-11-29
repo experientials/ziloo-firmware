@@ -2,6 +2,8 @@
 
 Fork the main branch if you are making general improvements.
 And make a PR to merge them on to the main branch as well as the relevant hardware(`hw/*`) branches.
+3rd party Hardware documentation and internal development information is kept on hardware specific branches.
+The main branch should contain the firmware build scripts and documentation for using the firmware.
 
 Fork a hardware(`hw/*`) branch, if you work on a firmware release for a specific platform.
 If possible you should fork the main branch for work on firmware work and later cherry pick the 
@@ -13,7 +15,6 @@ have passed tests and been rebased on main at the time, thereby capturing the lo
 
 - [Setup for i.MX8 Programming](./imx8/README.md)
 - [i.MX8 Development](./imx8/DEVELOP.md)
-
 
 ## Required Software for Local Development
 

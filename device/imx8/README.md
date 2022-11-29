@@ -55,6 +55,9 @@ Note that the variable name should be `fdt_file`, so the command for enabling OT
 ### U-Boot over Network
 
 - [U-Boot example commands](https://docs.embeddedts.com/U-boot_commands)
+- `brew install u-boot-tools`
+- [TFTP/NFS how to](https://github.com/compulab-yokneam/Documentation/blob/master/etc/internal/netboot.md)
+- `mkimage -C none -O Linux -A arm -T script -d ./device/imx8/boot/boot.tftp ./device/imx8/boot/boot.tftp.scr`
 
 
 ## Open Tasks

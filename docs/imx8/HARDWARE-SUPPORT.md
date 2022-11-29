@@ -6,6 +6,9 @@ The final hardware is a faceboard with modules:
 - USB Delivery/Power Delivery with TPS65988
 - SmartCam splitting CSI1, CSI2, SAI5 RX, I2C in Left and Right Sides
 
+Firmware configuration task:
+
+
 
 ### Networking
 
@@ -51,4 +54,26 @@ The final hardware is a faceboard with modules:
 - Ext4
 - SquashFS
 - UBI FS (not appropriate for MMC)
-- F2FS
+- [F2FS](https://en.wikipedia.org/wiki/F2FS) - [Reddit comments](https://www.reddit.com/r/linux/comments/6bngw0/refuting_the_myth_about_f2fs/)
+- OverlayFS
+
+## Structure
+
+Device Tree/Drivers/API
+
+- CDC Command Console
+- Ethernet 
+- Mass Storage for firmware updates and scripts
+- Video Stream (V4L2 based)
+- libcamera
+
+
+## Kernel Support
+
+The kernel booted must support connectivity primarily over the two USB ports
+
+- [CDC ECM Ethernet](https://www.kernel.org/doc/html/v5.3/usb/gadget_multi.html)
+- [RNDIS Ethernet](https://www.kernel.org/doc/html/v5.3/usb/gadget_multi.html)
+- [USB CDC ACM Serial](https://www.kernel.org/doc/html/v5.3/usb/gadget_multi.html)
+
+

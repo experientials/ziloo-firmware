@@ -121,6 +121,7 @@ sudo git push --set-upstream origin builder/etc
 The console on i.MX8 UART2 can be reached on ttyAMA0
 
 > minicom -b 115200 -D /dev/ttyAMA0
+> picocom -b 115200 /dev/ttyAMA0
 
 The low power Cortex M7 console UART4 should be on ttyAMA2
 

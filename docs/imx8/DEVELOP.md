@@ -1,6 +1,7 @@
 # i.MX8 Development
 
 
+
 ## Building Full Firmware
 
 Build cache can be 200GB, so cleaning it may be required with [a script](https://stackoverflow.com/questions/45341760/how-should-the-sstate-cache-directory-be-deleted-in-yocto)

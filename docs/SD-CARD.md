@@ -1,5 +1,37 @@
 # SD Card Tinkering
 
+
+
+
+### eMMC storage
+
+```sh
+root@ucm-imx8m-plus:~> df -h
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        29G  4.4G   23G  16% /
+devtmpfs        1.5G  4.0K  1.5G   1% /dev
+tmpfs           1.8G     0  1.8G   0% /dev/shm
+tmpfs           720M  9.1M  711M   2% /run
+tmpfs           4.0M     0  4.0M   0% /sys/fs/cgroup
+tmpfs           1.8G  4.0K  1.8G   1% /tmp
+tmpfs           1.8G  196K  1.8G   1% /var/volatile
+/dev/mmcblk2p1   84M   32M   52M  38% /run/media/mmcblk2p1
+tmpfs           360M  4.0K  360M   1% /run/user/0
+
+root@ucm-imx8m-plus:~> lsblk
+NAME         MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+mmcblk2      179:0    0 29.1G  0 disk 
+|-mmcblk2p1  179:1    0 83.2M  0 part /run/media/mmcblk2p1
+`-mmcblk2p2  179:2    0   29G  0 part /
+mmcblk2boot0 179:32   0    4M  1 disk 
+mmcblk2boot1 179:64   0    4M  1 disk 
+```
+
+Note that the boot partition is mounted on /run/media/mmcblk2p1/
+
+
+
 ## Production Layout
 
 Cards for the official product have a layout without support for iterative development and debugging.
