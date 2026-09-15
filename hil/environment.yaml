@@ -1,0 +1,45 @@
+# Labgrid environment for the UCM-iMX8M-Plus HIL bench.
+# The pytest `target` fixture uses the target named `main`.
+#
+# Two access paths coexist on one target:
+#   - NetworkService + SSHDriver  → the fast path (interactive shell, bulk exec, file transfer)
+#   - RawSerialPort + SerialDriver → the out-of-band console (boot logs, U-Boot, recovery)
+# Tests pick a driver explicitly by name, so having both bound is unambiguous. Fixtures that use
+# the serial console SKIP cleanly when the CP2104 isn't attached to this host (see conftest.py),
+# so `make test` still runs on a network-only host.
+#
+# Address strategy: prefer the mDNS name (stable across DHCP; board runs Avahi). Fall back to the
+# DHCP/Mac-shared IP if mDNS doesn't resolve on your network.
+targets:
+  main:
+    resources:
+      NetworkService:
+        address: "ucm-imx8m-plus.local"   # fallback: "192.168.2.4"
+        username: "root"
+      RawSerialPort:
+        # CP2104 console (onboard U24) on the micro-USB. macOS device node; on a Linux/Pi
+        # exporter this is typically /dev/ttyUSB0. Resolve-by-serial lives in console.sh; here
+        # labgrid opens the node directly. If absent, serial-tier tests skip.
+        port: "/dev/cu.usbserial-0236DC3C"
+        speed: 115200
+    drivers:
+      SSHDriver: {}
+      SerialDriver: {}          # ConsoleProtocol — raw byte stream over the CP2104
+      ShellDriver:              # CommandProtocol over the serial console (auto-root shell)
+        prompt: 'root@[\w.-]+:[^#]*# '
+        login_prompt: ' login: '
+        username: 'root'
+        # NXP i.MX distro auto-logs-in root on ttymxc1; ShellDriver still probes for the prompt.
+      UBootDriver:              # drive the U-Boot prompt (env inspection, boot selection)
+        prompt: 'u-boot=> '
+        # Catching the prompt needs the autoboot countdown interrupted right after a reset — see
+        # tests/test_uboot.py (opt-in, requires a power-cycle to time the interrupt).
+
+    # --- A4 recovery tier (add when the reset/power wiring + Pi exporter exist; see hil/README.md) ---
+    # resources:
+    #   NetworkPowerPort:                  # relay / JTAG-hosting Pi / smart-plug across 12 V or SW_RES
+    #     model: "..."
+    #     host: "..."
+    #     index: 1
+    # drivers:
+    #   NetworkPowerDriver: {}             # PowerProtocol — hard reset for hung-board HIL recovery

@@ -1,0 +1,2 @@
+labgrid==25.0.1
+pytest>=8,<9
