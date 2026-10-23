@@ -2,9 +2,12 @@
 #
 # console.sh — reliable serial console access to the UCM-iMX8M-Plus board (macOS).
 #
-# Why this exists: the board's only dependable channel right now is the CP2104 USB-UART
-# bridge (Ethernet DMA init fails on the current 5.10-gatesgarth image, so SSH is not a
-# reliable fallback — see docs/CONSOLE.md). This wraps picocom with the right settings,
+# Why this exists: serial is the out-of-band channel — boot logs, a hung/no-network kernel,
+# recovery. For a live board prefer SSH: the on-board RJ45 `eth0` works at 1 Gbps (carrier
+# AR8031 PHY; the boot-time "DMA init failed" is a cold-boot race — `ip link set eth0 up`
+# fixes it), and `usb0` CDC-ethernet is the always-there path (and Linux's primary once the
+# RJ45/ENET1 is dedicated to the M7 for DUT/diag). Use --exec/--capture for scripted serial;
+# reach for ssh-over-eth0/usb0 for exec/deploy. This wraps picocom with the right settings,
 # resolves the device by the adapter's *serial number* (stable across replug, unlike the
 # location-based /dev/*.usbmodem names), can wait for the board to appear, detects a port
 # that another session already holds, and logs every session for the record.
